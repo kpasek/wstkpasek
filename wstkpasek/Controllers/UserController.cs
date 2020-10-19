@@ -34,12 +34,8 @@ namespace wstkpasek.Controllers
     private readonly ITrainingRepository tr;
     private readonly IExerciseRepository er;
     private readonly IUserRepository ur;
-    private readonly ISeriesRepository sr;
-    private readonly IScheduleTrainingRepository str;
-    private readonly IScheduleExerciseRepository ser;
-    private readonly IScheduleSeriesRepository ssr;
 
-    public UserController(UserManager<IdentityUser<int>> userManager, SignInManager<IdentityUser<int>> signInManager, IConfiguration configuration, AppDBContext db, ITrainingRepository tr, IExerciseRepository er, IUserRepository ur, ISeriesRepository sr, IScheduleTrainingRepository str, IScheduleExerciseRepository ser, IScheduleSeriesRepository ssr)
+    public UserController(UserManager<IdentityUser<int>> userManager, SignInManager<IdentityUser<int>> signInManager, AppDBContext db, ITrainingRepository tr, IExerciseRepository er, IUserRepository ur)
     {
       this.userManager = userManager;
       this.signInManager = signInManager;
@@ -47,20 +43,16 @@ namespace wstkpasek.Controllers
       this.tr = tr;
       this.er = er;
       this.ur = ur;
-      this.sr = sr;
-      this.str = str;
-      this.ser = ser;
-      this.ssr = ssr;
     }
 
-    private string GetEmail()
-    {
-      return this.User.Identity.Name;
-    }
+    //private string GetEmail()
+    //{
+    //  return this.User.Identity.Name;
+    //}
 
     [Route("register")]
     [HttpPost]
-    public async Task<ActionResult> Register(UserRegister userRegister)
+    public async Task<ActionResult> Register([FromBody] UserRegister userRegister)
     {
 
       var user = new IdentityUser<int>()
@@ -89,7 +81,7 @@ namespace wstkpasek.Controllers
     }
     [Route("login")]
     [HttpPost]
-    public async Task<ActionResult> LoginPost([FromBody]UserLogin userLogin)
+    public async Task<ActionResult> LoginPost([FromBody] UserLogin userLogin)
     {
 
       var user = await userManager.FindByEmailAsync(userLogin.Email);
@@ -165,6 +157,13 @@ namespace wstkpasek.Controllers
       db.Remove(user);
       await db.SaveChangesAsync();
       return Ok();
+    }
+    [HttpGet]
+    [Route("check")]
+    public ActionResult Check()
+    {
+      if(User.Identity.IsAuthenticated)return Ok();
+      return Unauthorized();
     }
 
     public async Task SignInUserAsync(IdentityUser<int> user, bool isPersistent, IEnumerable<Claim> customClaims)
