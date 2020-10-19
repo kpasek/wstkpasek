@@ -1,11 +1,21 @@
+using System;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 using wstkp.Models.Database;
+using wstkp.Models.Exercises;
+using wstkp.Models.Schedule.Exercise;
+using wstkp.Models.Schedule.Series;
+using wstkp.Models.Schedule.Training;
+using wstkp.Models.SeriesModel;
+using wstkp.Models.TrainingModel;
+using wstkp.Models.User;
 
 namespace wstkpasek
 {
@@ -43,8 +53,8 @@ namespace wstkpasek
         config.LoginPath = "/user/login";
       });
 
-      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-      services.AddControllersWithViews();
+      //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+      //services.AddControllersWithViews();
 
       services.AddTransient<IExerciseRepository, ExerciseRepository>();
       services.AddTransient<ISeriesRepository, SeriesRepository>();
