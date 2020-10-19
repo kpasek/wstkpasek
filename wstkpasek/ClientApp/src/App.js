@@ -32,7 +32,7 @@ export default class App extends Component {
         <Route path='/harmonogram/cwiczenia' component={SExercises} />
         <Route path='/harmonogram/seria' component={SSeries} />
         <Route path='/harmonogram/trening/wykonaj' component={RunTraining} />
-        <Route path='/user/konto' component={User} />
+        <Route path='/konto' component={User} />
         <Route path='/admin' component={Admin} />
       </Layout>
     );
