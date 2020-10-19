@@ -92,7 +92,15 @@ namespace wstkpasek
       app.UseSpaStaticFiles();
 
       app.UseRouting();
+      app.UseCors(b =>
+      {
+        b.WithOrigins("localhost");
+        b.AllowAnyMethod();
+        b.AllowAnyHeader();
+      });
+      app.UseAuthentication();
 
+      app.UseAuthorization();
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllerRoute(
