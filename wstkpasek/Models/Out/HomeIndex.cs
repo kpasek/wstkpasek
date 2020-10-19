@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using wstkp.Models.Schedule.Series;
-using wstkp.Models.Schedule.Training;
-using wstkp.Models.User;
+using wstkpasek.Models.Schedule.Series;
+using wstkpasek.Models.Schedule.Training;
+using wstkpasek.Models.User;
 
-namespace wstkp.Models.Out
+namespace wstkpasek.Models.Out
 {
     public class HomeIndex
     {

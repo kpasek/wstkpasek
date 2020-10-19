@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using wstkp.Models.Database;
+using wstkpasek.Models.Database;
 
-namespace wstkp.Migrations
+namespace wstkpasek.Migrations
 {
     [DbContext(typeof(AppDBContext))]
     [Migration("20200727152429_add_user_settings")]

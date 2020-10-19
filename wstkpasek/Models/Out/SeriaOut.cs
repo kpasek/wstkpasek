@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using wstkp.Models.SeriesModel;
+using wstkpasek.Models.SeriesModel;
 
-namespace wstkp.Models.Out
+namespace wstkpasek.Models.Out
 {
     public class SeriesOut
     {

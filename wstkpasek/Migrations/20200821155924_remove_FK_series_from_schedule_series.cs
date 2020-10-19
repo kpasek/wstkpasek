@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace wstkp.Migrations
+namespace wstkpasek.Migrations
 {
     public partial class remove_FK_series_from_schedule_series : Migration
     {

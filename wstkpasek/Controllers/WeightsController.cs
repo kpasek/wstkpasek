@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using wstkp.Models.Database;
-using wstkp.Models.User;
+using wstkpasek.Models.Database;
+using wstkpasek.Models.User;
 
-namespace wstkp.Controllers
+namespace wstkpasek.Controllers
 {
   [Route("api/weights")]
   [ApiController]

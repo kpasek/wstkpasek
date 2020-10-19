@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using wstkp.Models.Exercises;
+using wstkpasek.Models.Exercises;
 
-namespace wstkp.Models.TrainingModel
+namespace wstkpasek.Models.TrainingModel
 {
   public interface ITrainingRepository
   {

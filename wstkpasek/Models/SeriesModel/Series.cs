@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.Serialization;
-using wstkp.Models.Exercises;
+using wstkpasek.Models.Exercises;
 
-namespace wstkp.Models.SeriesModel
+namespace wstkpasek.Models.SeriesModel
 {
   [Table("series")]
   public class Series

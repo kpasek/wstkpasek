@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace wstkp.Migrations
+namespace wstkpasek.Migrations
 {
     public partial class update_pass_history_table : Migration
     {

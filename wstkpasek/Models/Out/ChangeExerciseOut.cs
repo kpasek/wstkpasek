@@ -1,12 +1,12 @@
-﻿using wstkp.Models.Exercises;
-using wstkp.Models.Schedule.Exercise;
+﻿using wstkpasek.Models.Exercises;
+using wstkpasek.Models.Schedule.Exercise;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 
-namespace wstkp.Models.Out
+namespace wstkpasek.Models.Out
 {
     public class ChangeExerciseOut
     {

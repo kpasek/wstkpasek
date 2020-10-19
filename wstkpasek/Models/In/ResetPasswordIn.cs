@@ -1,4 +1,4 @@
-namespace wstkp.Models.In
+namespace wstkpasek.Models.In
 {
     public class ResetPasswordIn
     {

@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using wstkp.Models.Exercises;
+using wstkpasek.Models.Exercises;
 
-namespace wstkp.Models.TrainingModel
+namespace wstkpasek.Models.TrainingModel
 {
   [Table("trainings_exercises")]
   public class TrainingExercise

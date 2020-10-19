@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace wstkp.Models.Database
+namespace wstkpasek.Models.Database
 {
     public static class DbConfig
     {

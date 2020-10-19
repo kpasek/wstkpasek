@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace wstkp.Migrations
+namespace wstkpasek.Migrations
 {
     public partial class add_order_field_sieries : Migration
     {

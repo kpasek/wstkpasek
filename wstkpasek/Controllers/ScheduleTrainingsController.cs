@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using wstkp.Models.Database;
-using wstkp.Models.Schedule.Training;
+using wstkpasek.Models.Database;
+using wstkpasek.Models.Schedule.Training;
 
-namespace wstkp.Controllers
+namespace wstkpasek.Controllers
 {
   [Route("api/schedule/trainings")]
   [ApiController]

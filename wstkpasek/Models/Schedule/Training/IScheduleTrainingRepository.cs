@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace wstkp.Models.Schedule.Training
+namespace wstkpasek.Models.Schedule.Training
 {
   public interface IScheduleTrainingRepository
   {

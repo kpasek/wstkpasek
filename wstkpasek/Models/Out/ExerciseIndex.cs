@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using wstkp.Models.Exercises;
+using wstkpasek.Models.Exercises;
 
-namespace wstkp.Models.Out
+namespace wstkpasek.Models.Out
 {
     public class ExerciseIndex
     {

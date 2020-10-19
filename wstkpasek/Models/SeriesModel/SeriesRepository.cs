@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using wstkp.Models.Database;
+using wstkpasek.Models.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace wstkp.Models.SeriesModel
+namespace wstkpasek.Models.SeriesModel
 {
   public class SeriesRepository : ISeriesRepository
   {

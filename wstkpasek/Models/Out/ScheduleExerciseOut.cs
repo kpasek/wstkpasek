@@ -1,14 +1,14 @@
-﻿using wstkp.Models.Exercises;
-using wstkp.Models.Schedule.Exercise;
-using wstkp.Models.Schedule.Series;
+﻿using wstkpasek.Models.Exercises;
+using wstkpasek.Models.Schedule.Exercise;
+using wstkpasek.Models.Schedule.Series;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
-using Type = wstkp.Models.Exercises.Type;
+using Type = wstkpasek.Models.Exercises.Type;
 
-namespace wstkp.Models.Out
+namespace wstkpasek.Models.Out
 {
     public class ScheduleExerciseOut
     {

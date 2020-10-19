@@ -12,18 +12,18 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 
-using wstkp.Models.Exercises;
-using wstkp.Models.Database;
-using wstkp.Models.Out;
-using wstkp.Models.TrainingModel;
-using wstkp.Models.User;
-using wstkp.Models.In;
-using wstkp.Models.SeriesModel;
-using wstkp.Models.Schedule.Training;
-using wstkp.Models.Schedule.Exercise;
-using wstkp.Models.Schedule.Series;
+using wstkpasek.Models.Exercises;
+using wstkpasek.Models.Database;
+using wstkpasek.Models.Out;
+using wstkpasek.Models.TrainingModel;
+using wstkpasek.Models.User;
+using wstkpasek.Models.In;
+using wstkpasek.Models.SeriesModel;
+using wstkpasek.Models.Schedule.Training;
+using wstkpasek.Models.Schedule.Exercise;
+using wstkpasek.Models.Schedule.Series;
 
-namespace wstkp.Controllers
+namespace wstkpasek.Controllers
 {
   [Route("api/user")]
   public class UserController : Controller

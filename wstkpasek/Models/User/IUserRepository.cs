@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using wstkp.Models.Resources;
+using wstkpasek.Models.Resources;
 using Microsoft.AspNetCore.Identity;
 
-namespace wstkp.Models.User
+namespace wstkpasek.Models.User
 {
     public interface IUserRepository
     {

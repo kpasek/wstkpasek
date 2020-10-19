@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using wstkp.Models.Exercises;
-using wstkp.Models.Database;
+using wstkpasek.Models.Exercises;
+using wstkpasek.Models.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace wstkp.Models.TrainingModel
+namespace wstkpasek.Models.TrainingModel
 {
     public class TrainingRepository : ITrainingRepository
     {

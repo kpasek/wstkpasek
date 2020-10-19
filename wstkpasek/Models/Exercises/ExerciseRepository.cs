@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using wstkp.Models.Database;
-using wstkp.Models.SeriesModel;
+using wstkpasek.Models.Database;
+using wstkpasek.Models.SeriesModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 
-namespace wstkp.Models.Exercises
+namespace wstkpasek.Models.Exercises
 {
     public class ExerciseRepository : IExerciseRepository
     {

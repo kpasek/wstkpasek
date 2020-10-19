@@ -1,7 +1,7 @@
-﻿using wstkp.Models.Exercises;
-using wstkp.Models.Database;
-using wstkp.Models.Schedule.Exercise;
-using wstkp.Models.Schedule.Series;
+﻿using wstkpasek.Models.Exercises;
+using wstkpasek.Models.Database;
+using wstkpasek.Models.Schedule.Exercise;
+using wstkpasek.Models.Schedule.Series;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Microsoft.EntityFrameworkCore.Internal;
 using System.ComponentModel.DataAnnotations;
 
-namespace wstkp.Models.Schedule.Series
+namespace wstkpasek.Models.Schedule.Series
 {
   public class ScheduleSeriesRepository : IScheduleSeriesRepository
   {

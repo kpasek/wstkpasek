@@ -1,10 +1,10 @@
-﻿using wstkp.Models.Schedule.Series;
+﻿using wstkpasek.Models.Schedule.Series;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace wstkp.Models.Schedule.Series
+namespace wstkpasek.Models.Schedule.Series
 {
   public interface IScheduleSeriesRepository
   {

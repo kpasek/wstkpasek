@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using wstkp.Models.Exercises;
-using wstkp.Models.Schedule.Series;
-using wstkp.Models.SeriesModel;
+using wstkpasek.Models.Exercises;
+using wstkpasek.Models.Schedule.Series;
+using wstkpasek.Models.SeriesModel;
 
-namespace wstkp.Models.Out
+namespace wstkpasek.Models.Out
 {
   public class ExerciseOutDetailModel
   {

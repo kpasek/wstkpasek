@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using wstkp.Models.Exercises;
-using wstkp.Models.TrainingModel;
+using wstkpasek.Models.Exercises;
+using wstkpasek.Models.TrainingModel;
 
-namespace wstkp.Models.Out
+namespace wstkpasek.Models.Out
 {
     public class TreningOut
     {

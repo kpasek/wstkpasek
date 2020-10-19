@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using wstkp.Models.Database;
-using wstkp.Models.Resources;
+using wstkpasek.Models.Database;
+using wstkpasek.Models.Resources;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace wstkp.Models.User
+namespace wstkpasek.Models.User
 {
   public class UserRepository : IUserRepository
   {

@@ -1,13 +1,13 @@
-﻿using wstkp.Models.Database;
-using wstkp.Models.Schedule.Exercise;
-using wstkp.Models.Schedule.Training;
+﻿using wstkpasek.Models.Database;
+using wstkpasek.Models.Schedule.Exercise;
+using wstkpasek.Models.Schedule.Training;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace wstkp.Models.Schedule.Exercise
+namespace wstkpasek.Models.Schedule.Exercise
 {
   public class ScheduleExerciseRepository : IScheduleExerciseRepository
   {

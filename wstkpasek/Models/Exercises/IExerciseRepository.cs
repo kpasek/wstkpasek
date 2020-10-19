@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using wstkp.Models.SeriesModel;
+using wstkpasek.Models.SeriesModel;
 
-namespace wstkp.Models.Exercises
+namespace wstkpasek.Models.Exercises
 {
   public interface IExerciseRepository
   {

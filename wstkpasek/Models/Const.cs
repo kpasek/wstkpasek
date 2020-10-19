@@ -1,4 +1,4 @@
-namespace wstkp.Models
+namespace wstkpasek.Models
 {
     public class Const
     {

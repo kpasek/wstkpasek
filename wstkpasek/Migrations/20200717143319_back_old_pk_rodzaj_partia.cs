@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace wstkp.Migrations
+namespace wstkpasek.Migrations
 {
     public partial class back_old_pk_rodzaj_partia : Migration
     {

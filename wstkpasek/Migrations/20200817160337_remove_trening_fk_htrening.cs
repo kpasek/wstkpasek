@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace wstkp.Migrations
+namespace wstkpasek.Migrations
 {
     public partial class remove_trening_fk_htrening : Migration
     {

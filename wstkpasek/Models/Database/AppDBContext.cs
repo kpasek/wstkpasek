@@ -2,19 +2,19 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-using wstkp.Models;
-using wstkp.Models.Database;
+using wstkpasek.Models;
+using wstkpasek.Models.Database;
 
-using wstkp.Models.User;
-using wstkp.Models.Resources;
-using wstkp.Models.Exercises;
-using wstkp.Models.SeriesModel;
-using wstkp.Models.TrainingModel;
-using wstkp.Models.Schedule.Training;
-using wstkp.Models.Schedule.Exercise;
-using wstkp.Models.Schedule.Series;
+using wstkpasek.Models.User;
+using wstkpasek.Models.Resources;
+using wstkpasek.Models.Exercises;
+using wstkpasek.Models.SeriesModel;
+using wstkpasek.Models.TrainingModel;
+using wstkpasek.Models.Schedule.Training;
+using wstkpasek.Models.Schedule.Exercise;
+using wstkpasek.Models.Schedule.Series;
 
-namespace wstkp.Models.Database
+namespace wstkpasek.Models.Database
 {
   public class AppDBContext : IdentityDbContext<IdentityUser<int>, IdentityRole<int>, int>
   {
@@ -50,7 +50,7 @@ namespace wstkp.Models.Database
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
            => optionsBuilder.UseNpgsql(connectionString);
-    public DbSet<wstkp.Models.Exercises.ScheduleExercie> ScheduleExercie { get; set; }
+    public DbSet<wstkpasek.Models.Exercises.ScheduleExercie> ScheduleExercie { get; set; }
   }
 }
 

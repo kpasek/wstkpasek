@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace wstkp.Models.User
+namespace wstkpasek.Models.User
 {
     public class UserRegister
     {

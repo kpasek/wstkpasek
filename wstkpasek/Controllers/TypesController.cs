@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using wstkp.Models.Database;
-using wstkp.Models.Exercises;
-using Type = wstkp.Models.Exercises.Type;
+using wstkpasek.Models.Database;
+using wstkpasek.Models.Exercises;
+using Type = wstkpasek.Models.Exercises.Type;
 
-namespace wstkp.Controllers
+namespace wstkpasek.Controllers
 {
   [Route("api/types")]
   [ApiController]

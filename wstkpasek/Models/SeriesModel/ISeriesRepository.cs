@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace wstkp.Models.SeriesModel
+namespace wstkpasek.Models.SeriesModel
 {
   public interface ISeriesRepository
   {

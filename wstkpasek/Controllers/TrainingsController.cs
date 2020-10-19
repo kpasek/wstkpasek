@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using wstkp.Models.Database;
-using wstkp.Models.TrainingModel;
+using wstkpasek.Models.Database;
+using wstkpasek.Models.TrainingModel;
 
-namespace wstkp.Controllers
+namespace wstkpasek.Controllers
 {
   [Route("api/trainings")]
   [ApiController]

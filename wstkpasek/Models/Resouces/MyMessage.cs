@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace wstkp.Models.Resources
+namespace wstkpasek.Models.Resources
 {
   public class MyMessage
   {

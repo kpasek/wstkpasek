@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace wstkp.Models.Exercises
+namespace wstkpasek.Models.Exercises
 {
     [Table("exercise_parts")]
     public class Part

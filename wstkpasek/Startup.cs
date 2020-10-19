@@ -8,14 +8,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using wstkp.Models.Database;
-using wstkp.Models.Exercises;
-using wstkp.Models.Schedule.Exercise;
-using wstkp.Models.Schedule.Series;
-using wstkp.Models.Schedule.Training;
-using wstkp.Models.SeriesModel;
-using wstkp.Models.TrainingModel;
-using wstkp.Models.User;
+using wstkpasek.Models.Database;
+using wstkpasek.Models.Exercises;
+using wstkpasek.Models.Schedule.Exercise;
+using wstkpasek.Models.Schedule.Series;
+using wstkpasek.Models.Schedule.Training;
+using wstkpasek.Models.SeriesModel;
+using wstkpasek.Models.TrainingModel;
+using wstkpasek.Models.User;
 
 namespace wstkpasek
 {

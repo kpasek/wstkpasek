@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace wstkp.Models.User
+namespace wstkpasek.Models.User
 {
     public class UserLogin
     {

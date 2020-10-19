@@ -1,15 +1,15 @@
-﻿using wstkp.Models.Exercises;
-using wstkp.Models.Schedule.Exercise;
-using wstkp.Models.Schedule.Series;
-using wstkp.Models.Schedule.Training;
-using wstkp.Models.SeriesModel;
-using wstkp.Models.TrainingModel;
+﻿using wstkpasek.Models.Exercises;
+using wstkpasek.Models.Schedule.Exercise;
+using wstkpasek.Models.Schedule.Series;
+using wstkpasek.Models.Schedule.Training;
+using wstkpasek.Models.SeriesModel;
+using wstkpasek.Models.TrainingModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace wstkp.Models.In
+namespace wstkpasek.Models.In
 {
   public class AdminIn
   {

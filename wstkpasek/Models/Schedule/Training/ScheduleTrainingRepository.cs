@@ -1,4 +1,4 @@
-﻿using wstkp.Models.Database;
+﻿using wstkpasek.Models.Database;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace wstkp.Models.Schedule.Training
+namespace wstkpasek.Models.Schedule.Training
 {
   public class ScheduleTrainingRepository : IScheduleTrainingRepository
   {

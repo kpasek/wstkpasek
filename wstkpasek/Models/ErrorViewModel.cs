@@ -1,6 +1,6 @@
 using System;
 
-namespace wstkp.Models
+namespace wstkpasek.Models
 {
     public class ErrorViewModel
     {

@@ -1,14 +1,14 @@
 using System.Collections.Generic;
-using wstkp.Models.Exercises;
-using wstkp.Models.Resources;
-using wstkp.Models.Schedule.Exercise;
-using wstkp.Models.Schedule.Series;
-using wstkp.Models.Schedule.Training;
-using wstkp.Models.SeriesModel;
-using wstkp.Models.TrainingModel;
+using wstkpasek.Models.Exercises;
+using wstkpasek.Models.Resources;
+using wstkpasek.Models.Schedule.Exercise;
+using wstkpasek.Models.Schedule.Series;
+using wstkpasek.Models.Schedule.Training;
+using wstkpasek.Models.SeriesModel;
+using wstkpasek.Models.TrainingModel;
 using Microsoft.AspNetCore.Identity;
 
-namespace wstkp.Models.Out
+namespace wstkpasek.Models.Out
 {
   public class AdminOut
   {

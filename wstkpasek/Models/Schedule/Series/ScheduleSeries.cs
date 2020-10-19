@@ -1,10 +1,10 @@
-﻿using wstkp.Models.Schedule.Exercise;
-using wstkp.Models.SeriesModel;
+﻿using wstkpasek.Models.Schedule.Exercise;
+using wstkpasek.Models.SeriesModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection.Metadata.Ecma335;
 
-namespace wstkp.Models.Schedule.Series
+namespace wstkpasek.Models.Schedule.Series
 
 {
   [Table("schedule_series")]

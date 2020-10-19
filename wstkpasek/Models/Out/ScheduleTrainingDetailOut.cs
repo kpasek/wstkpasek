@@ -1,10 +1,10 @@
-﻿using wstkp.Models.Exercises;
-using wstkp.Models.Schedule.Exercise;
-using wstkp.Models.Schedule.Series;
-using wstkp.Models.Schedule.Training;
+﻿using wstkpasek.Models.Exercises;
+using wstkpasek.Models.Schedule.Exercise;
+using wstkpasek.Models.Schedule.Series;
+using wstkpasek.Models.Schedule.Training;
 using System.Collections.Generic;
 
-namespace wstkp.Models.Out
+namespace wstkpasek.Models.Out
 {
   public class ScheduleTrainingDetailOut
   {

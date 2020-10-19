@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace wstkp.Models.User
+namespace wstkpasek.Models.User
 {
     [Table("profile")]
     public class Profile

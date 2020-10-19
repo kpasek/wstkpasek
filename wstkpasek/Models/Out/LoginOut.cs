@@ -1,4 +1,4 @@
-namespace wstkp.Models.Out
+namespace wstkpasek.Models.Out
 {
     public class LoginOut
     {

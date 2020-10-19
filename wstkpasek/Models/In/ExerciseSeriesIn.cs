@@ -1,4 +1,4 @@
-namespace wstkp.Models.InModels
+namespace wstkpasek.Models.InModels
 {
     public class ExerciseSeriesIn
     {

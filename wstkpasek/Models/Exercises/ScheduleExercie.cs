@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using wstkp.Models.TrainingModel;
+using wstkpasek.Models.TrainingModel;
 
-namespace wstkp.Models.Exercises
+namespace wstkpasek.Models.Exercises
 {
     [Table("schedule_exercises")]
     public class ScheduleExercie

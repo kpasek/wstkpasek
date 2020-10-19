@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace wstkp.Migrations
+namespace wstkpasek.Migrations
 {
     public partial class harm_cw_init : Migration
     {

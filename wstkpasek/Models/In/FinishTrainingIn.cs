@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace wstkp.Models.In
+namespace wstkpasek.Models.In
 {
   public class FinishTrainingIn
   {
