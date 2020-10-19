@@ -50,7 +50,7 @@ namespace wstkpasek
       services.ConfigureApplicationCookie(config =>
       {
         config.Cookie.Name = "token.cookie";
-        config.LoginPath = "/user/login";
+        config.LoginPath = "/logowanie";
       });
 
       //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);

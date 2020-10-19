@@ -1,0 +1,117 @@
+﻿body {
+	background-color: #343a40;
+	font-family: "Montserrat", sans-serif;
+}
+
+.footer {
+	color: white;
+	padding-top: 1.5rem;
+	padding-bottom: 1.5rem;
+}
+.footer div {
+	color: white;
+}
+.footer a {
+	color: white;
+}
+
+.footer a:hover {
+	color: lightgray;
+}
+
+.vertical-center {
+	margin: 0;
+	position: relative;
+	top: 50%;
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+.navigation-link {
+	color: white;
+	font-size: 22px;
+	letter-spacing: 1px;
+}
+
+.navigation-link:hover {
+	color: lightgrey;
+}
+.header-nav {
+	width: 100%;
+}
+.btn-icon {
+	border: none;
+	background-color: transparent;
+	padding: 0;
+	margin: 0;
+}
+.form-icon {
+	padding-top: 12px;
+	padding-bottom: 12px;
+}
+.color-red {
+	color: red;
+}
+.custom-link {
+	font-size: 22px;
+	font-weight: 200;
+	letter-spacing: 1px;
+	color: blue;
+}
+.custom-link:hover {
+	color: darkblue;
+}
+.font-size-large {
+	font-size: 24px;
+}
+.section-title {
+	font-size: 24px;
+	font-weight: 400;
+	text-align: center;
+}
+.section-subtitle {
+	font-size: 16px;
+	font-weight: 200;
+	text-align: center;
+	margin-bottom: 16px;
+}
+.section-subtitle-list {
+	font-size: 14px;
+	font-weight: 200;
+	margin-bottom: 16px;
+}
+.item-title {
+	font-size: 18px;
+	font-weight: 400;
+}
+.item-subtitle {
+	font-size: 14px;
+	font-weight: 200;
+	margin-bottom: 16px;
+}
+.link-black {
+	color: black;
+}
+.link-black:hover {
+	color: darkslategray;
+}
+.font-size-normal {
+	font-size: 16px;
+}
+.cursor-pointer {
+	cursor: pointer;
+}
+.section-header {
+	background-color: white;
+	color: black;
+	font-size: 18px;
+	letter-spacing: 1px;
+	font-weight: 400;
+	border-radius: 4px;
+}
+.section-body {
+	background-color: white;
+	color: black;
+	font-size: 18px;
+	font-weight: 400;
+	border-radius: 4px;
+}

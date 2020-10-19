@@ -83,13 +83,12 @@ namespace wstkpasek.Controllers
     [HttpPost]
     public async Task<ActionResult> LoginPost([FromBody] UserLogin userLogin)
     {
-
+      if (userLogin == null) return BadRequest();
       var user = await userManager.FindByEmailAsync(userLogin.Email);
 
       if (user == null) return BadRequest();
       var loginResult = await signInManager.PasswordSignInAsync(user, userLogin.Password, false, true);
       if (!loginResult.Succeeded) return BadRequest();
-      var profile = db.Profile.Single(p => p.Email == userLogin.Email);
       var userClaims = new List<Claim>()
       {
         new Claim(ClaimTypes.Email, userLogin.Email)

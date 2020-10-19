@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Route } from "react-router";
 import { Layout } from "./components/Layout";
 import { Home } from "./components/Home";
-import { FetchData } from "./components/FetchData";
 import { Trainings } from "./components/Trainings";
 import { Exercises } from "./components/Exercises";
 import { Series } from "./components/Series";
@@ -19,10 +18,44 @@ import "./custom.css";
 
 export default class App extends Component {
   static displayName = App.name;
+  constructor() {
+    super();
+    this.state = {
+      isAuthenticated: false,
+    };
+  }
 
+  isAuthenticated() {
+    fetch("api/user/check", {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "include",
+    }).then((response) => {
+      if (response.ok) {
+        this.setState({
+          isAuthenticated: true,
+        });
+      }
+    });
+  }
+  handleLogout = () => {
+    fetch("api/user/logout").then(() => {
+      this.setState({
+        isAuthenticated: false,
+      });
+      window.location.href = "/";
+    });
+  };
+  componentDidMount() {
+    this.isAuthenticated();
+  }
   render() {
     return (
-      <Layout>
+      <Layout
+        isAuthenticated={this.state.isAuthenticated}
+        handleLogout={this.handleLogout}
+      >
         <Route exact path="/" component={Home} />
         <Route path="/trening" component={Trainings} />
         <Route path="/cwiczenia" component={Exercises} />
