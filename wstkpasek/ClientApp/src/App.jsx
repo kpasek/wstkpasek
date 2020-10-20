@@ -47,6 +47,9 @@ export default class App extends Component {
       window.location.href = "/";
     });
   };
+  handleLogin = () => {
+    this.setState({ isAuthenticated: true });
+  };
   componentDidMount() {
     this.isAuthenticated();
   }
@@ -66,7 +69,10 @@ export default class App extends Component {
         <Route path="/harmonogram/seria" component={SSeries} />
         <Route path="/harmonogram/trening/wykonaj" component={RunTraining} />
         <Route path="/konto" component={Account} />
-        <Route path="/logowanie" component={User} />
+        <Route
+          path="/logowanie"
+          render={(props) => <User handleLogin={this.handleLogin} {...props} />}
+        />
         <Route path="/admin" component={Admin} />
       </Layout>
     );
