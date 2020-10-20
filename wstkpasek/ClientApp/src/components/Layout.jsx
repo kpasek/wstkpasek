@@ -11,7 +11,7 @@ export class Layout extends Component {
           isAuthenticated={this.props.isAuthenticated}
           handleLogout={this.props.handleLogout}
         />
-        <Container>{this.props.children}</Container>
+        <div className="container px-0 px-lg-2">{this.props.children}</div>
       </div>
     );
   }
