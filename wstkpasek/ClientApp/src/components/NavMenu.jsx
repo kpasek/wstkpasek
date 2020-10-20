@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import "./NavMenu.css";
 
 export class NavMenu extends Component {
@@ -25,16 +26,16 @@ export class NavMenu extends Component {
         <React.Fragment>
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link" href="/prywatnosc">
-                Prywatność
-              </a>
+              <Link to="/prywatnosc">
+                <span className="nav-link">Prywatność</span>
+              </Link>
             </li>
           </ul>
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <a href="/logowanie" className="nav-link">
-                Zaloguj/Zarejestruj
-              </a>
+              <Link to="/logowanie">
+                <span className="nav-link">Zaloguj/Zarejestruj</span>
+              </Link>
             </li>
           </ul>
         </React.Fragment>
@@ -44,19 +45,21 @@ export class NavMenu extends Component {
         <React.Fragment>
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link" href="/harmonogram">
-                Harmonogram
-              </a>
+              <Link to="/harmonogram">
+                <span className="nav-link" href="/harmonogram">
+                  Harmonogram
+                </span>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/trening">
-                Treningi
-              </a>
+              <Link to="/trening">
+                <span className="nav-link">Treningi</span>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/cwiczenia">
-                Ćwiczenia
-              </a>
+              <Link to="/cwiczenia">
+                <span className="nav-link">Lista ćwiczeń</span>
+              </Link>
             </li>
           </ul>
           <ul className="navbar-nav ml-auto">
@@ -74,18 +77,17 @@ export class NavMenu extends Component {
               </li>
             } */}
             <li className="nav-item ml-auto">
-              <a href="/konto" className="nav-link">
-                Konto
-              </a>
+              <Link to="/konto">
+                <span className="nav-link">Konto</span>
+              </Link>
             </li>
             <li className="nav-item ml-auto ml-lg-1">
-              <a
-                href="#"
+              <span
                 onClick={this.props.handleLogout}
-                className="nav-link"
+                className="nav-link cursor-pointer"
               >
                 Wyloguj
-              </a>
+              </span>
             </li>
           </ul>
         </React.Fragment>
@@ -97,9 +99,9 @@ export class NavMenu extends Component {
     return (
       <header>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-          <a className="navbar-brand" href="/">
-            Strona główna
-          </a>
+          <Link to="/">
+            <span className="navbar-brand">Strona główna</span>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
