@@ -7,25 +7,18 @@ using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 
 using wstkpasek.Models.Exercises;
 using wstkpasek.Models.Database;
-using wstkpasek.Models.Out;
 using wstkpasek.Models.TrainingModel;
 using wstkpasek.Models.User;
 using wstkpasek.Models.In;
-using wstkpasek.Models.SeriesModel;
-using wstkpasek.Models.Schedule.Training;
-using wstkpasek.Models.Schedule.Exercise;
-using wstkpasek.Models.Schedule.Series;
 
 namespace wstkpasek.Controllers
 {
-  [Route("api/user")]
+    [Route("api/user")]
   public class UserController : Controller
   {
     private readonly UserManager<IdentityUser<int>> userManager;
