@@ -1,0 +1,12 @@
+.font-size-large{
+    font-size: 24px;
+}
+.letter-spacing-1{
+    letter-spacing: 1px;
+}
+.link-black{
+    color: black;
+}
+.link-black:hover{
+    color: darkslategray;
+}
