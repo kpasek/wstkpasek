@@ -5,5 +5,7 @@
 .icon-edit:before { content: '\e803'; } /* '' */
 .icon-loop:before { content: '\e804'; } /* '' */
 .icon-cancel:before { content: '\e805'; } /* '' */
+.icon-plus:before { content: '\e806'; } /* '' */
+.icon-minus:before { content: '\e807'; } /* '' */
 .icon-spin4:before { content: '\e834'; } /* '' */
 .icon-info-circled-alt:before { content: '\f086'; } /* '' */
