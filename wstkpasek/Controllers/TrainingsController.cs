@@ -133,7 +133,7 @@ namespace wstkpasek.Controllers
         public async Task<ActionResult> DeleteExerciseInTraining(DeleteExerciseInTraining model)
         {
             var email = GetEmail();
-            var te = _context.TrainingExercises.Where(w => w.ExerciseId == model.ExerciseId && w.TrainingId == model.TrainingId && w.UserEmail == email && w.Order == model.Order)
+            var te = await _context.TrainingExercises.Where(w => w.ExerciseId == model.ExerciseId && w.TrainingId == model.TrainingId && w.UserEmail == email && w.Order == model.Order)
                 .Take(1)
                 .SingleAsync();
             _context.Remove(te);
