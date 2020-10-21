@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using wstkpasek.Models.Database;
+using wstkpasek.Models.In;
 using wstkpasek.Models.TrainingModel;
 
 namespace wstkpasek.Controllers
@@ -111,6 +112,34 @@ namespace wstkpasek.Controllers
             return CreatedAtAction("GetTraining", new { id = training.TrainingId }, training);
         }
 
+        [HttpPost("exercise/add")]
+        public async Task<ActionResult> AddExerciseInTraining(AddExerciseInTraining model)
+        {
+            var email = GetEmail();
+            TrainingExercise te = new TrainingExercise
+            {
+                ExerciseId = model.ExerciseId,
+                TrainingId = model.TrainingId,
+                Order = await trainingRepository.GetMaxOrderInTrainingAsync(model.TrainingId, email) + 1,
+                UserEmail = email
+            };
+            await _context.TrainingExercises.AddAsync(te);
+            await _context.SaveChangesAsync();
+            return Ok();
+
+        }
+
+        [HttpDelete("exercise/delete")]
+        public async Task<ActionResult> DeleteExerciseInTraining(DeleteExerciseInTraining model)
+        {
+            var email = GetEmail();
+            var te = _context.TrainingExercises.Where(w => w.ExerciseId == model.ExerciseId && w.TrainingId == model.TrainingId && w.UserEmail == email && w.Order == model.Order)
+                .Take(1)
+                .SingleAsync();
+            _context.Remove(te);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
         // DELETE: api/Trainings/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Training>> DeleteTraining(int id)
