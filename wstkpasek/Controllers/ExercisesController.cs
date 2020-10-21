@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using wstkpasek.Models.Database;
 using wstkpasek.Models.Exercises;
+using wstkpasek.Models.In;
 using wstkpasek.Models.InModels;
 using wstkpasek.Models.TrainingModel;
 
@@ -78,6 +79,14 @@ namespace wstkpasek.Controllers
             return exercise;
         }
 
+        [HttpGet("part/{partId}")]
+        public ActionResult<List<Exercise>> GetExercisesByPart(string partId)
+        {
+            var email = GetEmail();
+            return exerciseRepository.GetExerciseByPart(partId, email);
+
+        }
+
         [HttpPost("order")]
         public async Task<int> GetExerciseOrder(CheckOrderIn model)
         {
@@ -123,6 +132,19 @@ namespace wstkpasek.Controllers
             return NoContent();
         }
 
+        [HttpPost("change/{id}")]
+        public async Task<ActionResult> SwapExercise(int id, SwapExerciseIn model)
+        {
+            var trEx = _context.TrainingExercises.Where(w => w.ExerciseId == id && w.TrainingId == model.TrainingId && w.Order == model.Order)
+                                                 .OrderByDescending(o => o.TrainingExerciseId)
+                                                 .Take(1)
+                                                 .Single();
+            trEx.ExerciseId = model.ExerciseId;
+            _context.Update(trEx);
+            await _context.SaveChangesAsync();
+            return Ok();
+
+        }
         /// <summary>
         /// change exercise order in training
         /// </summary>

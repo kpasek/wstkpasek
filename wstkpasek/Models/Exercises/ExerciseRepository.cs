@@ -35,11 +35,11 @@ namespace wstkpasek.Models.Exercises
             var e = db.Exercises
               .Include(p => p.Part)
               .Where(c => c.UserEmail == email && c.Part.Name == partId);
-            return !e.Any() ? null : e.ToList();
+            return !e.Any() ? new List<Exercise>() : e.ToList();
         }
         public List<Exercise> GetExerciseByPart(Part part, string email)
         {
-            return db.Exercises.Where(c => c.UserEmail == email && c.Part == part).ToList();
+            return db.Exercises.Include(i => i.Part).Where(c => c.UserEmail == email && c.Part == part).ToList();
         }
 
         public Exercise GetExercise(int exerciseId, string email)
