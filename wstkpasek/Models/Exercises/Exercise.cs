@@ -8,7 +8,6 @@ namespace wstkpasek.Models.Exercises
   {
     [Key]
     public int ExerciseId { set; get; }
-    [Required]
     public string UserEmail { get; set; }
     public bool Public { get; set; } = false;
     public string Name { get; set; }

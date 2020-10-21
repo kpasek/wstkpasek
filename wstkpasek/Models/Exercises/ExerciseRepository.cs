@@ -5,6 +5,7 @@ using wstkpasek.Models.Database;
 using wstkpasek.Models.SeriesModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using wstkpasek.Models.TrainingModel;
 
 namespace wstkpasek.Models.Exercises
 {
@@ -64,11 +65,13 @@ namespace wstkpasek.Models.Exercises
         {
             var exercises = db.Exercises.Where(c => c.UserEmail == email || c.Public).ToList();
             var parts = new List<Part>();
-            foreach (var par in from exercise in exercises where !parts.Exists(p => p.Name == exercise.PartId) select new Part
-            {
-                Name = exercise.PartId,
-                UserEmail = email
-            })
+            foreach (var par in from exercise in exercises
+                                where !parts.Exists(p => p.Name == exercise.PartId)
+                                select new Part
+                                {
+                                    Name = exercise.PartId,
+                                    UserEmail = email
+                                })
             {
                 parts.Add(par);
             }
@@ -90,9 +93,9 @@ namespace wstkpasek.Models.Exercises
 
         public List<Type> GetTypes(string email)
         {
-            return db.Types.Where(r => r.UserEmail == email || r.Public).ToList();
+            return db.Types.Where(r => r.UserEmail == email || r.Public).Distinct().ToList();
         }
-        
+
 
         public async Task<bool> CheckExerciseAsync(int exerciseId, string email)
         {
@@ -106,25 +109,51 @@ namespace wstkpasek.Models.Exercises
             return !await cw.AnyAsync() ? null : await cw.ToListAsync();
         }
 
-    public async Task<List<Exercise>> GetExercisesAdminAsync(string User, string Name, string Part)
-    {
-      var exercises = db.Exercises
-        .Where(e => EF.Functions.ILike(e.UserEmail, $"%{User}%") && EF.Functions.ILike(e.Name, $"%{Name}%") && EF.Functions.ILike(e.PartId, $"%{Part}%"))
-        .OrderByDescending(o => o.Name)
-        .Take(50);
-      return await exercises.AnyAsync() ? await exercises.ToListAsync() : null;
-    }
+        public async Task<List<Exercise>> GetExercisesAdminAsync(string User, string Name, string Part)
+        {
+            var exercises = db.Exercises
+              .Where(e => EF.Functions.ILike(e.UserEmail, $"%{User}%") && EF.Functions.ILike(e.Name, $"%{Name}%") && EF.Functions.ILike(e.PartId, $"%{Part}%"))
+              .OrderByDescending(o => o.Name)
+              .Take(50);
+            return await exercises.AnyAsync() ? await exercises.ToListAsync() : null;
+        }
 
-    public async Task<List<Part>> GetPartsAdminAsync()
-    {
-      var parts = db.Parts;
-      return await parts.AnyAsync() ? await parts.ToListAsync() : null;
-    }
+        public async Task<List<Part>> GetPartsAdminAsync()
+        {
+            var parts = db.Parts;
+            return await parts.AnyAsync() ? await parts.ToListAsync() : null;
+        }
 
-    public async Task<List<Type>> GetTypesAdminAsync()
-    {
-      var types = db.Types;
-      return await types.AnyAsync() ? await types.ToListAsync() : null; 
+        public async Task<List<Type>> GetTypesAdminAsync()
+        {
+            var types = db.Types;
+            return await types.AnyAsync() ? await types.ToListAsync() : null;
+        }
+
+        public async Task<List<Exercise>> GetExercisesForTraining(int trainingId, string email)
+        {
+            var trainingExercises = db.TrainingExercises
+                .Include(tc => tc.Exercise)
+                .Where(t => t.TrainingId == trainingId && t.UserEmail == email)
+                .OrderBy(t => t.Order);
+            if (!await trainingExercises.AnyAsync()) return new List<Exercise>();
+
+            var list = await trainingExercises.ToListAsync();
+            return list.Select(cw => cw.Exercise).ToList();
+        }
+
+        public async Task<int> GetExerciseOrderAsync(int trainingId, int exerciseId, string email)
+        {
+            var te = db.TrainingExercises.Where(w => w.TrainingId == trainingId && w.ExerciseId == exerciseId && w.UserEmail == email)
+                                         .Take(1);
+            if (!await te.AnyAsync()) return 0;
+            return te.Select(s => s.Order).Single();
+        }
+
+        public async Task<List<TrainingExercise>> GetExercisesOrderForTraining(int trainingId, string email)
+        {
+            var items = db.TrainingExercises.Where(w => w.TrainingId == trainingId && w.UserEmail == email);
+            return await items.AnyAsync() ? await items.ToListAsync() : null;
+        }
     }
-  }
 }

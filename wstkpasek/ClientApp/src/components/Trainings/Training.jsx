@@ -1,5 +1,7 @@
 ﻿import React, { Component } from "react";
 import "../../css/fontello.css";
+import TrainingDetails from "./TrainingDetails";
+import TrainingInfo from "./TrainingInfo";
 
 export class Training extends Component {
   static displayName = Training.name;
@@ -129,18 +131,18 @@ export class Training extends Component {
       <React.Fragment>
         {this.renderInfo()}
         <div className="py-1 font-size-large letter-spacing-1">
-          {/* detail view button and training name */}
+          {/* training name */}
           <div className="float-left">
             <a
               className="link-black"
               data-toggle="collapse"
-              href={"#training-" + this.state.trainingId}
+              href={"#training-detail-" + this.state.trainingId}
               role="button"
               aria-expanded="false"
               aria-controls="collapseExample"
             >
-              <i className="icon-down-dir"></i>
               <span className="">{this.state.name}</span>
+              <i className="icon-down-dir"></i>
             </a>
           </div>
           {/* edit button */}
@@ -156,7 +158,34 @@ export class Training extends Component {
               <i className="icon-edit"></i>
             </a>
           </div>
+          {/* info button */}
+          <div className="float-right">
+            <a
+              href={"#training-" + this.state.trainingId}
+              className="link-black"
+              data-toggle="collapse"
+              role="button"
+              aria-expanded="false"
+              aria-controls="collapseExample"
+            >
+              <i className="icon-info-circled-alt"></i>
+            </a>
+          </div>
           <div style={{ clear: "both" }}></div>
+        </div>
+        {/* collapsed trainig detail */}
+        <div
+          className="collapse"
+          id={"training-detail-" + this.state.trainingId}
+        >
+          <div className="">
+            <TrainingDetails
+              key={"detail-component-" + this.state.trainingId}
+              trainingId={this.state.trainingId}
+              types={this.props.types}
+              parts={this.props.parts}
+            />
+          </div>
         </div>
         {/* collapsed edit fields */}
         <div className="collapse" id={"training-edit-" + this.state.trainingId}>
@@ -196,12 +225,13 @@ export class Training extends Component {
             </button>
           </div>
         </div>
-        {/* collapsed trainig detail */}
+        {/* collapsed trainig info */}
         <div className="collapse" id={"training-" + this.state.trainingId}>
-          <div className="card card-body">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
-            terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer
-            labore wes anderson cred nesciunt sapiente ea proident.
+          <div className="">
+            <TrainingInfo
+              key={"info-component-" + this.state.trainingId}
+              trainingId={this.state.trainingId}
+            />
           </div>
         </div>
       </React.Fragment>

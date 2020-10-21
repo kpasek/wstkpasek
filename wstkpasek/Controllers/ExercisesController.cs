@@ -6,26 +6,62 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using wstkpasek.Models.Database;
 using wstkpasek.Models.Exercises;
+using wstkpasek.Models.InModels;
+using wstkpasek.Models.TrainingModel;
 
 namespace wstkpasek.Controllers
 {
-  [Route("api/exercises")]
+    [Route("api/exercises")]
     [ApiController]
     [Authorize]
     public class ExercisesController : ControllerBase
     {
         private readonly AppDBContext _context;
+        private readonly IExerciseRepository exerciseRepository;
 
-        public ExercisesController(AppDBContext context)
+        public ExercisesController(AppDBContext context, IExerciseRepository exerciseRepository)
         {
             _context = context;
+            this.exerciseRepository = exerciseRepository;
+        }
+
+        private string GetEmail()
+        {
+            return this.User.Identity.Name;
         }
 
         // GET: api/Exercises
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Exercise>>> GetExercises()
+        public ActionResult<IEnumerable<Exercise>> GetExercises()
         {
-            return await _context.Exercises.ToListAsync();
+            var email = GetEmail();
+            var exercise = exerciseRepository.GetExercises(email);
+            return exercise.Any() ? exercise : new List<Exercise>();
+        }
+
+        [HttpGet("parts")]
+        public ActionResult<List<Part>> GetParts()
+        {
+            var email = GetEmail();
+            var parts = exerciseRepository.GetParts(email);
+            return parts;
+        }
+
+        [HttpGet("types")]
+        public ActionResult<List<Type>> GetTypes()
+        {
+            var email = GetEmail();
+            var types = exerciseRepository.GetTypes(email);
+            return types;
+        }
+
+        // GET: api/exercises/training/{id}
+        [HttpGet("training/{id}")]
+        public async Task<ActionResult<IEnumerable<Exercise>>> GetExercisesForTrainingAsync(int id)
+        {
+            var email = GetEmail();
+            var exercises = await exerciseRepository.GetExercisesForTraining(id, email);
+            return exercises;
         }
 
         // GET: api/Exercises/5
@@ -42,16 +78,29 @@ namespace wstkpasek.Controllers
             return exercise;
         }
 
+        [HttpPost("order")]
+        public async Task<int> GetExerciseOrder(CheckOrderIn model)
+        {
+            var email = GetEmail();
+            var order = await exerciseRepository.GetExerciseOrderAsync(model.TrainingId, model.ExerciseId, email);
+            return order;
+        }
+
         // PUT: api/Exercises/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutExercise(int id, Exercise exercise)
         {
+            var email = GetEmail();
+            exercise.UserEmail = email;
+
             if (id != exercise.ExerciseId)
             {
                 return BadRequest();
             }
+
 
             _context.Entry(exercise).State = EntityState.Modified;
 
@@ -74,13 +123,62 @@ namespace wstkpasek.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// change exercise order in training
+        /// </summary>
+        /// <param name="model">trainingId, exerciseId, new order</param>
+        /// <returns>none</returns>
+        [HttpPost("change-order")]
+        public async Task<ActionResult> ChangeOrder(ChangeOrderIn model)
+        {
+            var email = GetEmail();
+            var trainingExercises = await exerciseRepository.GetExercisesOrderForTraining(model.TrainingId, email);
+            var changedItem =
+                trainingExercises.Single(s => s.TrainingId == model.TrainingId && s.ExerciseId == model.ExerciseId);
+            if (changedItem.Order == model.Order) return Ok();
+            if (model.Order > trainingExercises.Max(m => m.Order)) model.Order = trainingExercises.Max(m => m.Order);
+            var exercisesInNewOrder = new List<TrainingExercise>();
+
+            if (changedItem.Order < model.Order)
+            {
+                exercisesInNewOrder = trainingExercises.Where(w => w.Order <= model.Order && w.TrainingExerciseId != changedItem.TrainingExerciseId).ToList();
+                foreach (var exercise in exercisesInNewOrder)
+                {
+                    exercise.Order--;
+                }
+
+                changedItem.Order = model.Order;
+                exercisesInNewOrder.Add(changedItem);
+            }
+
+            if (changedItem.Order > model.Order)
+            {
+                {
+                    exercisesInNewOrder = trainingExercises.Where(w =>
+                        w.Order >= model.Order && w.TrainingExerciseId != changedItem.TrainingExerciseId).ToList();
+                    foreach (var exercise in exercisesInNewOrder)
+                    {
+                        exercise.Order++;
+                    }
+
+                    changedItem.Order = model.Order;
+                    exercisesInNewOrder.Add(changedItem);
+                }
+
+            }
+
+            _context.UpdateRange(exercisesInNewOrder);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
         // POST: api/Exercises
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public async Task<ActionResult<Exercise>> PostExercise(Exercise exercise)
         {
-            _context.Exercises.Add(exercise);
+            await _context.Exercises.AddAsync(exercise);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetExercise", new { id = exercise.ExerciseId }, exercise);
