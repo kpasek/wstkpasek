@@ -14,7 +14,7 @@ import { User } from "./components/User";
 import { Admin } from "./components/Admin";
 import { Account } from "./components/Account";
 
-import "./custom.css";
+import "./css/site.css";
 
 export default class App extends Component {
   static displayName = App.name;
@@ -60,11 +60,11 @@ export default class App extends Component {
         handleLogout={this.handleLogout}
       >
         <Route exact path="/" component={Home} />
-        <Route path="/trening" component={Trainings} />
+        <Route path="/trening" exact component={Trainings} />
         <Route path="/cwiczenia" component={Exercises} />
         <Route path="/seria" component={Series} />
-        <Route path="/harmonogram" component={Schedule} />
-        <Route path="/harmonogram/trening" component={STrainings} />
+        <Route path="/harmonogram" exact component={Schedule} />
+        <Route path="/harmonogram/trening" exact component={STrainings} />
         <Route path="/harmonogram/cwiczenia" component={SExercises} />
         <Route path="/harmonogram/seria" component={SSeries} />
         <Route path="/harmonogram/trening/wykonaj" component={RunTraining} />
