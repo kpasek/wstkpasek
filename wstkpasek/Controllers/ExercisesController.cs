@@ -8,6 +8,7 @@ using wstkpasek.Models.Database;
 using wstkpasek.Models.Exercises;
 using wstkpasek.Models.In;
 using wstkpasek.Models.InModels;
+using wstkpasek.Models.Out;
 using wstkpasek.Models.TrainingModel;
 
 namespace wstkpasek.Controllers
@@ -37,6 +38,7 @@ namespace wstkpasek.Controllers
         {
             var email = GetEmail();
             var exercise = exerciseRepository.GetExercises(email);
+
             return exercise.Any() ? exercise : new List<Exercise>();
         }
 
@@ -58,7 +60,7 @@ namespace wstkpasek.Controllers
 
         // GET: api/exercises/training/{id}
         [HttpGet("training/{id}")]
-        public async Task<ActionResult<IEnumerable<Exercise>>> GetExercisesForTrainingAsync(int id)
+        public async Task<ActionResult<IEnumerable<ExerciseWithOrder>>> GetExercisesForTrainingAsync(int id)
         {
             var email = GetEmail();
             var exercises = await exerciseRepository.GetExercisesForTraining(id, email);
@@ -200,6 +202,31 @@ namespace wstkpasek.Controllers
         [HttpPost]
         public async Task<ActionResult<Exercise>> PostExercise(Exercise exercise)
         {
+            var email = GetEmail();
+            exercise.UserEmail = email;
+            var part = exerciseRepository.GetPart(exercise.PartId, email);
+            var types = exerciseRepository.GetType(exercise.TypeId, email);
+            if (part == null)
+            {
+                var newPart = new Part
+                {
+                    Name = exercise.PartId,
+                    Public = false,
+                    UserEmail = email
+                };
+                await _context.AddAsync(newPart);
+            }
+            if (types == null)
+            {
+                var newType = new Type
+                {
+                    Public = false,
+                    TypeName = exercise.TypeId,
+                    UserEmail = email
+                };
+                await _context.AddAsync(newType);
+            }
+
             await _context.Exercises.AddAsync(exercise);
             await _context.SaveChangesAsync();
 

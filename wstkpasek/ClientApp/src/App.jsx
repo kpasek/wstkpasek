@@ -3,7 +3,7 @@ import { Route } from "react-router";
 import { Layout } from "./components/Layout";
 import { Home } from "./components/Home";
 import { Trainings } from "./components/Trainings/Trainings";
-import { Exercises } from "./components/Exercises";
+import { Exercises } from "./components/Exercises/Exercises";
 import { Series } from "./components/Series";
 import { Schedule } from "./components/Schedule";
 import { STrainings } from "./components/STrainings";

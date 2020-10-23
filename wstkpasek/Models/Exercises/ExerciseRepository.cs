@@ -6,6 +6,7 @@ using wstkpasek.Models.SeriesModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using wstkpasek.Models.TrainingModel;
+using wstkpasek.Models.Out;
 
 namespace wstkpasek.Models.Exercises
 {
@@ -130,16 +131,26 @@ namespace wstkpasek.Models.Exercises
             return await types.AnyAsync() ? await types.ToListAsync() : null;
         }
 
-        public async Task<List<Exercise>> GetExercisesForTraining(int trainingId, string email)
+        public async Task<List<ExerciseWithOrder>> GetExercisesForTraining(int trainingId, string email)
         {
             var trainingExercises = db.TrainingExercises
                 .Include(tc => tc.Exercise)
                 .Where(t => t.TrainingId == trainingId && t.UserEmail == email)
                 .OrderBy(t => t.Order);
-            if (!await trainingExercises.AnyAsync()) return new List<Exercise>();
+            if (!await trainingExercises.AnyAsync()) return new List<ExerciseWithOrder>();
+            var exercisesWithOrder = trainingExercises.Select(exercise => new ExerciseWithOrder
+                {
+                    ExerciseId = exercise.ExerciseId,
+                    Name = exercise.Exercise.Name,
+                    Public = exercise.Exercise.Public,
+                    Description = exercise.Exercise.Description,
+                    Order = exercise.Order,
+                    PartId = exercise.Exercise.PartId,
+                    TypeId = exercise.Exercise.TypeId
+                })
+                .ToList();
 
-            var list = await trainingExercises.ToListAsync();
-            return list.Select(cw => cw.Exercise).ToList();
+            return exercisesWithOrder;
         }
 
         public async Task<int> GetExerciseOrderAsync(int trainingId, int exerciseId, string email)
@@ -149,6 +160,7 @@ namespace wstkpasek.Models.Exercises
             if (!await te.AnyAsync()) return 0;
             return te.Select(s => s.Order).Single();
         }
+
 
         public async Task<List<TrainingExercise>> GetExercisesOrderForTraining(int trainingId, string email)
         {

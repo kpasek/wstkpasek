@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using wstkpasek.Models.Out;
 using wstkpasek.Models.SeriesModel;
 using wstkpasek.Models.TrainingModel;
 
@@ -21,7 +22,7 @@ namespace wstkpasek.Models.Exercises
         Task<List<Exercise>> GetExercisesAdminAsync(string user, string name, string part);
         Task<List<Part>> GetPartsAdminAsync();
         Task<List<Type>> GetTypesAdminAsync();
-        Task<List<Exercise>> GetExercisesForTraining(int id, string email);
+        Task<List<ExerciseWithOrder>> GetExercisesForTraining(int id, string email);
         Task<int> GetExerciseOrderAsync(int trainingId, int exerciseId, string email);
         Task<List<TrainingExercise>> GetExercisesOrderForTraining(int trainingId, string email);
     }

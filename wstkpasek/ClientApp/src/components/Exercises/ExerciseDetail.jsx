@@ -5,13 +5,13 @@ export default class ExerciseDetail extends Component {
     super(props);
 
     this.state = {
-      exerciseId: this.props.exerciseId,
-      name: "",
-      partId: "",
-      order: 0,
-      typeId: "",
-      description: "",
-      public: false,
+      exerciseId: this.props.exercise.exerciseId,
+      name: this.props.exercise.name,
+      partId: this.props.exercise.partId,
+      order: this.props.exercise.order,
+      typeId: this.props.exercise.typeId,
+      description: this.props.exercise.description,
+      public: this.props.exercise.public,
       parts: this.props.parts,
       types: this.props.types,
       series: [],
@@ -65,33 +65,6 @@ export default class ExerciseDetail extends Component {
     });
   };
   async fetchData() {
-    const response = await fetch("/api/exercises/" + this.state.exerciseId, {
-      method: "GET",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-
-    const orderResponse = await fetch("api/exercises/order", {
-      method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        trainingId: this.props.trainingId,
-        exerciseId: this.state.exerciseId,
-      }),
-    });
-
-    const order = await orderResponse.json();
-
     const seriesResponse = await fetch(
       "api/series/exercise/" + this.state.exerciseId,
       {
@@ -107,7 +80,7 @@ export default class ExerciseDetail extends Component {
 
     const series = await seriesResponse.json();
     const getExerciseSelectResponse = await fetch(
-      "api/exercises/part/" + data.partId,
+      "api/exercises/part/" + this.state.partId,
       {
         method: "GET",
         mode: "cors",
@@ -120,13 +93,13 @@ export default class ExerciseDetail extends Component {
     );
     const exercises = await getExerciseSelectResponse.json();
     this.setState({
-      exerciseId: this.props.exerciseId,
-      name: data.name,
-      partId: data.partId,
-      order: order,
-      typeId: data.typeId,
-      description: data.description,
-      public: data.public,
+      exerciseId: this.state.exerciseId,
+      name: this.state.name,
+      partId: this.state.partId,
+      order: this.state.order,
+      typeId: this.state.typeId,
+      description: this.state.description,
+      public: this.state.public,
       series: series,
       selectExercises: exercises,
       parts: this.state.parts,
@@ -145,24 +118,25 @@ export default class ExerciseDetail extends Component {
         "Content-Type": "application/json",
       },
     });
-    const index = this.state.series.indexOf(
-      (item) => item.seriesId === seriesId
-    );
-    this.state.series.splice(index, 1);
-    this.setState({
-      exerciseId: this.state.exerciseId,
-      name: this.state.name,
-      partId: this.state.partId,
-      order: this.state.order,
-      typeId: this.state.typeId,
-      description: this.state.description,
-      public: this.state.public,
-      series: this.state.series,
-      parts: this.state.parts,
-      types: this.state.types,
+    await this.fetchData();
+    // const index = this.state.series.indexOf(
+    //   (item) => item.seriesId === seriesId
+    // );
+    // this.state.series.splice(index, 1);
+    // this.setState({
+    //   exerciseId: this.state.exerciseId,
+    //   name: this.state.name,
+    //   partId: this.state.partId,
+    //   order: this.state.order,
+    //   typeId: this.state.typeId,
+    //   description: this.state.description,
+    //   public: this.state.public,
+    //   series: this.state.series,
+    //   parts: this.state.parts,
+    //   types: this.state.types,
 
-      loading: this.state.loading,
-    });
+    //   loading: this.state.loading,
+    // });
   };
   handleNewSeries = async () => {
     const postResult = await fetch("api/series", {
@@ -327,9 +301,12 @@ export default class ExerciseDetail extends Component {
     const newDescription = document.getElementById(
       "edit-exercise-description-" + this.state.exerciseId
     ).value;
-    const newOrder = document.getElementById(
-      "edit-exercise-order-" + this.state.exerciseId
-    ).value;
+    let newOrder = 0;
+    if (this.props.training) {
+      newOrder = document.getElementById(
+        "edit-exercise-order-" + this.state.exerciseId
+      ).value;
+    }
 
     const updateTask = fetch("api/exercises/" + this.state.exerciseId, {
       method: "PUT",
@@ -349,28 +326,30 @@ export default class ExerciseDetail extends Component {
       }),
     });
 
-    const changeOrderTask = fetch("api/exercises/change-order", {
-      method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        trainingId: this.props.trainingId,
-        exerciseId: this.state.exerciseId,
-        order: parseInt(newOrder),
-      }),
-    });
+    if (this.props.training) {
+      const changeOrderTask = fetch("api/exercises/change-order", {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          trainingId: this.props.trainingId,
+          exerciseId: this.state.exerciseId,
+          order: parseInt(newOrder),
+        }),
+      });
+      await changeOrderTask;
+    }
+
     await updateTask;
-    await changeOrderTask;
 
     this.setState({
-      exerciseId: this.props.exerciseId,
+      exerciseId: this.state.exerciseId,
       name: newName,
       partId: newPart,
-      order: parseInt(newOrder),
       typeId: newType,
       description: newDescription,
       public: this.state.public,
@@ -438,9 +417,94 @@ export default class ExerciseDetail extends Component {
       </React.Fragment>
     );
   };
+  handleRefresh = async () => {
+    this.setState({
+      exerciseId: this.state.exerciseId,
+      name: this.props.exercise.name,
+      partId: this.props.exercise.partId,
+      order: this.props.exercise.order,
+      typeId: this.props.exercise.typeId,
+      description: this.props.exercise.description,
+      public: this.props.exercise.public,
+      series: this.state.series,
+      selectExercises: this.state.selectExercises,
+      parts: this.state.parts,
+      types: this.state.types,
+
+      loading: false,
+    });
+  };
+  renderOrder() {
+    if (this.props.training) {
+      return (
+        <React.Fragment>
+          <label htmlFor={"edit-exercise-order-" + this.state.exerciseId}>
+            Kolejność
+          </label>
+          <input
+            className="form-control"
+            type="number"
+            min="1"
+            id={"edit-exercise-order-" + this.state.exerciseId}
+            defaultValue={this.state.order}
+          />
+        </React.Fragment>
+      );
+    } else return null;
+  }
+  renderChangeButton() {
+    if (this.props.training) {
+      return (
+        <i
+          className="icon-loop font-size-large mx-1"
+          type="button"
+          data-toggle="collapse"
+          data-target={"#change-exercise-" + this.state.exerciseId}
+          aria-expanded="false"
+          aria-controls={"change-exercise-" + this.state.exerciseId}
+        />
+      );
+    } else return null;
+  }
+  renderChangeForm() {
+    if (this.props.training) {
+      return (
+        <div className="">
+          <select
+            className="custom-select"
+            id={"select-part-" + this.state.exerciseId}
+            onChange={this.handleChangePart}
+          >
+            {this.renderPartsSelect()}
+          </select>
+          <select
+            className="custom-select"
+            id={"select-exercise-" + this.state.exerciseId}
+          >
+            {this.renderExercisesSelect()}
+          </select>
+          <button
+            className="btn btn-outline-success"
+            onClick={() => {
+              this.props.handleChangeExercise(
+                this.state.exerciseId,
+                this.state.order
+              );
+            }}
+          >
+            Zamień
+          </button>
+        </div>
+      );
+    } else return null;
+  }
   renderBody = () => {
     if (this.state.loading) {
-      return <h2>Trwa ładowanie</h2>;
+      return (
+        <h3>
+          Trwa ładowanie <i className="icon-spin4"></i>
+        </h3>
+      );
     } else {
       return (
         <React.Fragment>
@@ -473,16 +537,10 @@ export default class ExerciseDetail extends Component {
                 data-target={"#edit-exercise-" + this.state.exerciseId}
                 aria-expanded="false"
                 aria-controls={"edit-exercise-" + this.state.exerciseId}
+                onClick={this.handleRefresh}
               />
-              {/* change button */}
-              <i
-                className="icon-loop font-size-large mx-1"
-                type="button"
-                data-toggle="collapse"
-                data-target={"#change-exercise-" + this.state.exerciseId}
-                aria-expanded="false"
-                aria-controls={"change-exercise-" + this.state.exerciseId}
-              />
+              {this.renderChangeButton()}
+
               {/* delete button */}
               <i
                 className="icon-trash-empty color-red font-size-large"
@@ -723,7 +781,7 @@ export default class ExerciseDetail extends Component {
                           </button>
                         </div>
                         {/* order input */}
-                        <div className="row mx-auto mt-1">
+                        {/* <div className="row mx-auto mt-1">
                           <label
                             htmlFor={"series-order-" + s.seriesId}
                             className="col-12 font-size-18"
@@ -746,7 +804,7 @@ export default class ExerciseDetail extends Component {
                           >
                             Zatwierdź
                           </button>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   ))}
@@ -787,7 +845,7 @@ export default class ExerciseDetail extends Component {
                   <input
                     className="form-control"
                     type="text"
-                    list="parts-list"
+                    list="part-list"
                     id={"edit-exercise-part-" + this.state.exerciseId}
                     defaultValue={this.state.partId}
                   />
@@ -799,7 +857,7 @@ export default class ExerciseDetail extends Component {
                   <input
                     className="form-control"
                     type="text"
-                    list="types-list"
+                    list="type-list"
                     id={"edit-exercise-type-" + this.state.exerciseId}
                     defaultValue={this.state.typeId}
                   />
@@ -816,18 +874,7 @@ export default class ExerciseDetail extends Component {
                     id={"edit-exercise-description-" + this.state.exerciseId}
                     defaultValue={this.state.description}
                   />
-                  <label
-                    htmlFor={"edit-exercise-order-" + this.state.exerciseId}
-                  >
-                    Kolejność
-                  </label>
-                  <input
-                    className="form-control"
-                    type="number"
-                    min="1"
-                    id={"edit-exercise-order-" + this.state.exerciseId}
-                    defaultValue={this.state.order}
-                  />
+                  {this.renderOrder()}
                   <button
                     className="btn btn-outline-primary my-2"
                     onClick={this.handleEditExercise}
@@ -842,33 +889,7 @@ export default class ExerciseDetail extends Component {
                 aria-labelledby="changeExercise"
                 data-parent={"#accordion-training"}
               >
-                {/* change exercise form */}
-                <div className="">
-                  <select
-                    className="custom-select"
-                    id={"select-part-" + this.state.exerciseId}
-                    onChange={this.handleChangePart}
-                  >
-                    {this.renderPartsSelect()}
-                  </select>
-                  <select
-                    className="custom-select"
-                    id={"select-exercise-" + this.state.exerciseId}
-                  >
-                    {this.renderExercisesSelect()}
-                  </select>
-                  <button
-                    className="btn btn-outline-success"
-                    onClick={() => {
-                      this.props.handleChangeExercise(
-                        this.state.exerciseId,
-                        this.state.order
-                      );
-                    }}
-                  >
-                    Zamień
-                  </button>
-                </div>
+                {this.renderChangeForm()}
               </div>
               <div
                 id={"delete-exercise-" + this.state.exerciseId}
