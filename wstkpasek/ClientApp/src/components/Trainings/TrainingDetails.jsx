@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ExerciseDetail from "./ExerciseDetail";
+import ExerciseDetail from "../Exercises/ExerciseDetail";
 
 export default class TrainingDetails extends Component {
   constructor(props) {
@@ -14,7 +14,6 @@ export default class TrainingDetails extends Component {
   componentDidMount = async () => {
     await this.fetchData();
   };
-
   handleChangeExercise = async (exerciseId, order) => {
     var select = document.getElementById("select-exercise-" + exerciseId);
     await fetch("/api/exercises/change/" + exerciseId, {
@@ -36,7 +35,6 @@ export default class TrainingDetails extends Component {
   renderPartsSelect = () => {
     return (
       <React.Fragment>
-        <option defaultValue={this.state.partId}>{this.state.partId}</option>
         {this.state.parts.map((part) => (
           <option key={"select-" + part.name} value={part.name}>
             {part.name}
@@ -158,7 +156,11 @@ export default class TrainingDetails extends Component {
   };
   renderBody = () => {
     if (this.state.loading) {
-      return <h2>Trwa ładowanie</h2>;
+      return (
+        <h2>
+          Trwa ładowanie <i className="icon-spin4"></i>
+        </h2>
+      );
     } else {
       return (
         <React.Fragment>
@@ -167,8 +169,9 @@ export default class TrainingDetails extends Component {
               {this.state.exercises.map((exercise) => (
                 <ExerciseDetail
                   key={"exercise-component-" + exercise.exerciseId + "-"}
+                  training={true}
                   trainingId={this.state.trainingId}
-                  exerciseId={exercise.exerciseId}
+                  exercise={exercise}
                   types={this.props.types}
                   parts={this.props.parts}
                   refresh={this.fetchData}
@@ -177,25 +180,45 @@ export default class TrainingDetails extends Component {
                 />
               ))}
             </div>
-            <select
-              className="custom-select"
-              id={"select-training-part-" + this.state.trainingId}
-              onChange={this.handleChangePart}
+            {/* add button */}
+            <div className="mt-2">
+              <a
+                href={"#training-add-exercise-" + this.state.trainingId}
+                className="link-black"
+                data-toggle="collapse"
+                role="button"
+                aria-expanded="false"
+                aria-controls="collapseAddExercise"
+              >
+                <span className="font-size-20">
+                  <i className="icon-plus"></i> Dodaj
+                </span>
+              </a>
+            </div>
+            <div
+              className="collapse"
+              id={"training-add-exercise-" + this.state.trainingId}
             >
-              {this.renderPartsSelect()}
-            </select>
-            <select
-              className="custom-select"
-              id={"select-training-exercise-" + this.state.trainingId}
-            >
-              {this.renderExercisesSelect()}
-            </select>
-            <button
-              className="btn btn-outline-primary my-2"
-              onClick={this.handleAddExercise}
-            >
-              Dodaj ćwiczenie
-            </button>
+              <select
+                className="custom-select my-1"
+                id={"select-training-part-" + this.state.trainingId}
+                onChange={this.handleChangePart}
+              >
+                {this.renderPartsSelect()}
+              </select>
+              <select
+                className="custom-select"
+                id={"select-training-exercise-" + this.state.trainingId}
+              >
+                {this.renderExercisesSelect()}
+              </select>
+              <button
+                className="btn btn-outline-primary my-2"
+                onClick={this.handleAddExercise}
+              >
+                Dodaj ćwiczenie
+              </button>
+            </div>
           </div>
         </React.Fragment>
       );

@@ -145,6 +145,7 @@ export class Training extends Component {
               <i className="icon-down-dir"></i>
             </a>
           </div>
+
           {/* edit button */}
           <div className="float-right">
             <a
