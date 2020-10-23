@@ -16,7 +16,7 @@ export class Trainings extends Component {
   }
 
   async fetchTrainingData() {
-    const response = await fetch("/api/trainings", {
+    const response = await fetch("api/trainings", {
       method: "GET",
       mode: "cors",
       cache: "no-cache",
@@ -97,10 +97,10 @@ export class Trainings extends Component {
   };
   handleNewTraining = async () => {
     const name = document.getElementById("new-training-name").value;
-    const exerciseNumger = document.getElementById("new-training-exercises")
+    const exerciseNumber = document.getElementById("new-training-exercises")
       .value;
 
-    await fetch("/api/trainings", {
+    await fetch("api/trainings", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -110,7 +110,7 @@ export class Trainings extends Component {
       },
       body: JSON.stringify({
         name: name,
-        exerciseNumber: exerciseNumger,
+        exerciseNumber: exerciseNumber,
       }),
     });
     await this.fetchTrainingData();
