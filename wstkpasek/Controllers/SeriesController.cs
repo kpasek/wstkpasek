@@ -173,6 +173,7 @@ namespace wstkpasek.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Series>> DeleteSeries(int id)
         {
+            var email = GetEmail();
             var series = await _context.Series.FindAsync(id);
             if (series == null)
             {
@@ -182,6 +183,15 @@ namespace wstkpasek.Controllers
             _context.Series.Remove(series);
             await _context.SaveChangesAsync();
 
+            var seriesToChange = await seriesRepository.GetSeriesForExerciseAsync(series.ExerciseId, email);
+            if (seriesToChange.Any())
+            {
+                seriesToChange = seriesToChange.Where(w => w.Order > series.Order).ToList();
+                if (seriesToChange.Any()) foreach (var s in seriesToChange) s.Order--;
+            }
+            _context.UpdateRange(seriesToChange);
+
+            await _context.SaveChangesAsync();
             return series;
         }
 
