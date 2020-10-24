@@ -82,7 +82,11 @@ export class Exercises extends Component {
         "Content-Type": "application/json",
       },
     });
-    this.fetchData();
+    this.setState({
+      exercises: this.state.exercises.filter(
+        (e) => e.exerciseId !== exerciseId
+      ),
+    });
   };
   renderSelectPart = () => {
     return (
