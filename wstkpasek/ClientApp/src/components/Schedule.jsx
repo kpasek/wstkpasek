@@ -1,59 +1,168 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import "../css/site.css";
 
 export class Schedule extends Component {
   static displayName = Schedule.name;
 
   constructor(props) {
     super(props);
-    this.state = { forecasts: [], loading: true };
+    this.state = {
+      year: 2020,
+      month: 10,
+      months: [
+        "styczeń",
+        "luty",
+        "marzec",
+        "kwiecień",
+        "maj",
+        "czerwiec",
+        "lipiec",
+        "sierpień",
+        "wrzesień",
+        "październik",
+        "listopad",
+        "grudzień",
+      ],
+      loading: true,
+    };
   }
 
   componentDidMount() {
-    this.populateWeatherData();
+    this.fetchSchedule();
   }
 
-  static renderForecastsTable(forecasts) {
-    return (
-      <table className='table table-striped' aria-labelledby="tabelLabel">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
-          </tr>
-        </thead>
-        <tbody>
-          {forecasts.map(forecast =>
-            <tr key={forecast.date}>
-              <td>{forecast.date}</td>
-              <td>{forecast.temperatureC}</td>
-              <td>{forecast.temperatureF}</td>
-              <td>{forecast.summary}</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+  fetchSchedule = async () => {
+    const today = new Date();
+    const month = today.getMonth() + 1;
+    const scheduleRespone = await fetch(
+      "api/schedule/trainings/" + today.getFullYear() + "/" + month,
+      {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
-  }
+    const responseTrainings = await fetch("api/trainings", {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const responseParts = await fetch("api/exercises/parts", {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const responseTypes = await fetch("api/exercises/types", {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const trainings = await responseTrainings.json();
+    const schedule = await scheduleRespone.json();
+    const parts = await responseParts.json();
+    const types = await responseTypes.json();
 
+    this.setState({
+      schedule: schedule,
+      trainings: trainings,
+      parts: parts,
+      types: types,
+      loading: false,
+    });
+  };
+  renderPartIdList = () => {
+    if (this.state.parts.length > 0) {
+      return (
+        <datalist id="parts-list">
+          {this.state.parts.map((part) => (
+            <option key={"part-key-" + part.name} value={part.name}>
+              {part.name}
+            </option>
+          ))}
+        </datalist>
+      );
+    } else {
+      return (
+        <datalist id="parts-list">
+          <option key={"no-parts"} value="">
+            Brak danych
+          </option>
+        </datalist>
+      );
+    }
+  };
+  renderBody = () => {
+    if (this.state.loading) {
+      return <h3>Trwa ładowanie</h3>;
+    }
+    return (
+      <React.Fragment>
+        <div className="">
+          <div className="col-lg-8 text-center">
+            <h1 className="mt-3 mb-1 text-center">Harmonogram</h1>
+            <div className="mb-3 font-size-20">
+              <i className="icon-left-open-big" />
+              <span className="mx-2">
+                {this.state.months[this.state.month] + " - " + this.state.year}
+              </span>
+              <i className="icon-right-open-big" />
+            </div>
+          </div>
+          <div className="col-lg-8 px-1">
+            {this.state.schedule.map((training) => (
+              <span key={training.scheduleTrainingId}>
+                <div className="my-2 float-left">
+                  <Link
+                    to={{
+                      pathname: "/harmonogram/" + training.scheduleTrainingId,
+                      scheduleTrainingId: training.scheduleTrainingId,
+                    }}
+                  >
+                    <div className="training-title link-black">
+                      {training.name}
+                    </div>
+                  </Link>
+                  <div className="training-subtitle">
+                    {new Date(training.trainingDate).toLocaleString()}
+                  </div>
+                </div>
+                <Link
+                  to={{
+                    pathname: "/start/" + training.scheduleTrainingId,
+                    scheduleTrainingId: training.scheduleTrainingId,
+                  }}
+                >
+                  <div className="float-right training-title pt-3 link-black">
+                    Start
+                    <i className="icon-play-outline" />
+                  </div>
+                </Link>
+                <div style={{ clear: "both" }}></div>
+              </span>
+            ))}
+          </div>
+        </div>
+      </React.Fragment>
+    );
+  };
   render() {
-    let contents = this.state.loading
-      ? <p><em>Loading...</em></p>
-      : Schedule.renderForecastsTable(this.state.forecasts);
-
-    return (
-      <div>
-        <h1 id="tabelLabel" >Weather forecast</h1>
-        <p>This component demonstrates fetching data from the server.</p>
-        {contents}
-      </div>
-    );
-  }
-
-  async populateWeatherData() {
-    const response = await fetch('weatherforecast');
-    const data = await response.json();
-    this.setState({ forecasts: data, loading: false });
+    return <React.Fragment>{this.renderBody()}</React.Fragment>;
   }
 }
