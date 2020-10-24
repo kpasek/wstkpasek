@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using wstkpasek.Models.Database;
@@ -100,10 +98,11 @@ namespace wstkpasek.Controllers
             return NoContent();
         }
 
-        // POST: api/Trainings
+        // POST: api/trainings
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<Training>> PostTraining([FromBody] Training training)
         {
             var email = GetEmail();

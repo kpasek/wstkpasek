@@ -110,8 +110,20 @@ export class Trainings extends Component {
       },
       body: JSON.stringify({
         name: name,
-        exerciseNumber: exerciseNumber,
+        exerciseNumber: parseInt(exerciseNumber),
       }),
+    });
+    await this.fetchTrainingData();
+  };
+  handleDeleteTraining = async (trainingId) => {
+    await fetch("api/trainings/" + trainingId, {
+      method: "DELETE",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     await this.fetchTrainingData();
   };
@@ -119,6 +131,7 @@ export class Trainings extends Component {
     if (this.state.loading) return <h2>Trwa ładowanie...</h2>;
     return (
       <React.Fragment>
+        {/* new training button */}
         <i
           className="icon-plus font-size-20 float-left pl-3 pt-2"
           type="button"
@@ -129,6 +142,7 @@ export class Trainings extends Component {
         ></i>
         <h1 className="mt-3 mb-4 text-center">Treningi</h1>
         <div style={{ clear: "both" }}></div>
+        {/* new training fields */}
         <div
           id={"new-training"}
           className="collapse"
@@ -166,6 +180,7 @@ export class Trainings extends Component {
             <Training
               key={training.trainingId}
               trainingId={training.trainingId}
+              onDeleteTraining={this.handleDeleteTraining}
               types={this.state.types}
               parts={this.state.parts}
             />

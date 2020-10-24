@@ -145,7 +145,19 @@ export class Training extends Component {
               <i className="icon-down-dir"></i>
             </a>
           </div>
-
+          {/* delete training button */}
+          <div className="float-right">
+            <a
+              href={"#training-delete-" + this.state.trainingId}
+              className="link-black"
+              data-toggle="collapse"
+              role="button"
+              aria-expanded="false"
+              aria-controls="collapseDelete"
+            >
+              <i className="icon-trash-empty color-red"></i>
+            </a>
+          </div>
           {/* edit button */}
           <div className="float-right">
             <a
@@ -154,7 +166,7 @@ export class Training extends Component {
               data-toggle="collapse"
               role="button"
               aria-expanded="false"
-              aria-controls="collapseExample"
+              aria-controls="collapseEdit"
             >
               <i className="icon-edit"></i>
             </a>
@@ -167,11 +179,12 @@ export class Training extends Component {
               data-toggle="collapse"
               role="button"
               aria-expanded="false"
-              aria-controls="collapseExample"
+              aria-controls="collapseInfo"
             >
               <i className="icon-info-circled-alt"></i>
             </a>
           </div>
+
           <div style={{ clear: "both" }}></div>
         </div>
         {/* collapsed trainig detail */}
@@ -186,6 +199,27 @@ export class Training extends Component {
               types={this.props.types}
               parts={this.props.parts}
             />
+          </div>
+        </div>
+        {/* collapsed trainig delete */}
+        <div
+          className="collapse"
+          id={"training-delete-" + this.state.trainingId}
+        >
+          <div className="">
+            <p className="mt-2 px-2">
+              Usunięcie treningu powoduje wykasowanie wszystkich zależności
+              pomiędzy ćwiczeniami a danym treningiem. Operacja jest
+              nieodwracalna
+            </p>
+            <button
+              className="btn btn-outline-danger mt-3"
+              onClick={() => {
+                this.props.onDeleteTraining(this.state.trainingId);
+              }}
+            >
+              Usuń trening
+            </button>
           </div>
         </div>
         {/* collapsed edit fields */}
