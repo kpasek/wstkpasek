@@ -1,4 +1,6 @@
 
+.icon-left-open-big:before { content: '\e765'; } /* '' */
+.icon-right-open-big:before { content: '\e766'; } /* '' */
 .icon-down-dir:before { content: '\e800'; } /* '' */
 .icon-trash-empty:before { content: '\e801'; } /* '' */
 .icon-play-outline:before { content: '\e802'; } /* '' */
