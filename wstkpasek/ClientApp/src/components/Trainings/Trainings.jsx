@@ -125,7 +125,11 @@ export class Trainings extends Component {
         "Content-Type": "application/json",
       },
     });
-    await this.fetchTrainingData();
+    this.setState({
+      trainings: this.state.trainings.filter(
+        (tr) => tr.trainingId !== trainingId
+      ),
+    });
   };
   renderBody() {
     if (this.state.loading) return <h2>Trwa ładowanie...</h2>;

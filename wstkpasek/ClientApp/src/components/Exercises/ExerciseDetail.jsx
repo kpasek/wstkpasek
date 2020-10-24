@@ -118,25 +118,9 @@ export default class ExerciseDetail extends Component {
         "Content-Type": "application/json",
       },
     });
-    await this.fetchData();
-    // const index = this.state.series.indexOf(
-    //   (item) => item.seriesId === seriesId
-    // );
-    // this.state.series.splice(index, 1);
-    // this.setState({
-    //   exerciseId: this.state.exerciseId,
-    //   name: this.state.name,
-    //   partId: this.state.partId,
-    //   order: this.state.order,
-    //   typeId: this.state.typeId,
-    //   description: this.state.description,
-    //   public: this.state.public,
-    //   series: this.state.series,
-    //   parts: this.state.parts,
-    //   types: this.state.types,
-
-    //   loading: this.state.loading,
-    // });
+    this.setState({
+      series: this.state.series.filter((s) => s.seriesId !== seriesId),
+    });
   };
   handleNewSeries = async () => {
     const postResult = await fetch("api/series", {
