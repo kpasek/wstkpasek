@@ -7,7 +7,7 @@ import { Exercises } from "./components/Exercises/Exercises";
 import { Series } from "./components/Series";
 import { Schedule } from "./components/Schedule";
 import { STrainings } from "./components/STrainings";
-import { SExercises } from "./components/SExercises";
+import { SExercise } from "./components/SExercise";
 import { SSeries } from "./components/SSeries";
 import { RunTraining } from "./components/RunTraining";
 import { User } from "./components/User";
@@ -64,10 +64,8 @@ export default class App extends Component {
         <Route path="/cwiczenia" component={Exercises} />
         <Route path="/seria" component={Series} />
         <Route path="/harmonogram" exact component={Schedule} />
-        <Route path="/harmonogram/trening" exact component={STrainings} />
-        <Route path="/harmonogram/cwiczenia" component={SExercises} />
-        <Route path="/harmonogram/seria" component={SSeries} />
-        <Route path="/harmonogram/trening/wykonaj" component={RunTraining} />
+        <Route path="/harmonogram/:trainingId" exact component={STrainings} />
+        <Route path="/harmonogram/:trainingId/start" component={RunTraining} />
         <Route path="/konto" component={Account} />
         <Route
           path="/logowanie"
