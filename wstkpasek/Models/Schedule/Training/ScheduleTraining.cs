@@ -10,7 +10,6 @@ namespace wstkpasek.Models.Schedule.Training
     {
         [Key]
         public int ScheduleTrainingId { get; set; }
-        [Required]
         public string UserEmail { get; set; }
         [Required]
         public DateTime TrainingDate { get; set; } = DateTime.Now;

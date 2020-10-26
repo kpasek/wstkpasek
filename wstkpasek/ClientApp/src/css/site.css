@@ -1,5 +1,5 @@
 body{
-    min-width: 250px;
+    min-width: 270px;
 }
 .font-size-large{
     font-size: 24px;
@@ -22,6 +22,12 @@ body{
 .link-black:hover{
     color: darkslategray;
 }
+.link-green{
+    color: rgb(0, 125, 0);
+}
+.link-green:hover{
+    color: rgb(0, 75, 0);
+}
 .cursor-pointer{
     cursor: pointer;
 }
@@ -39,7 +45,7 @@ body{
     letter-spacing: 1px;
 
 }
-@media only screen and (max-width: 350px) {
+@media only screen and (max-width: 400px) {
     .max-width-exercise-list{
         max-width: 200px;
     }
@@ -49,4 +55,7 @@ body{
     .max-width-exercise-list{
         max-width: 160px;
     }
+}
+.max-width-400{
+    max-width: 400;
 }

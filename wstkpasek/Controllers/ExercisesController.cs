@@ -160,12 +160,12 @@ namespace wstkpasek.Controllers
             var changedItem =
                 trainingExercises.Single(s => s.TrainingId == model.TrainingId && s.ExerciseId == model.ExerciseId);
             if (changedItem.Order == model.Order) return Ok();
-            if (model.Order > trainingExercises.Max(m => m.Order)) model.Order = trainingExercises.Max(m => m.Order);
+            if (model.Order > trainingExercises.Count) model.Order = trainingExercises.Count;
             var exercisesInNewOrder = new List<TrainingExercise>();
 
             if (changedItem.Order < model.Order)
             {
-                exercisesInNewOrder = trainingExercises.Where(w => w.Order <= model.Order && w.TrainingExerciseId != changedItem.TrainingExerciseId).ToList();
+                exercisesInNewOrder = trainingExercises.Where(w => w.Order <= model.Order && w.Order > changedItem.Order && w.TrainingExerciseId != changedItem.TrainingExerciseId).ToList();
                 foreach (var exercise in exercisesInNewOrder)
                 {
                     exercise.Order--;
@@ -179,7 +179,7 @@ namespace wstkpasek.Controllers
             {
                 {
                     exercisesInNewOrder = trainingExercises.Where(w =>
-                        w.Order >= model.Order && w.TrainingExerciseId != changedItem.TrainingExerciseId).ToList();
+                        w.Order >= model.Order && w.Order < changedItem.Order && w.TrainingExerciseId != changedItem.TrainingExerciseId).ToList();
                     foreach (var exercise in exercisesInNewOrder)
                     {
                         exercise.Order++;

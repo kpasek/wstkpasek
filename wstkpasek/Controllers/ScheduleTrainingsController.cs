@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using wstkpasek.Models.Database;
 using wstkpasek.Models.Schedule.Training;
+using wstkpasek.Models.TrainingModel;
 
 namespace wstkpasek.Controllers
 {
@@ -16,12 +17,15 @@ namespace wstkpasek.Controllers
     {
         private readonly AppDBContext _context;
         private readonly IScheduleTrainingRepository scheduleTrainingRepository;
+        private readonly ITrainingRepository trainingRepository;
 
-        public ScheduleTrainingsController(AppDBContext context, IScheduleTrainingRepository scheduleTrainingRepository)
+        public ScheduleTrainingsController(AppDBContext context, IScheduleTrainingRepository scheduleTrainingRepository, ITrainingRepository trainingRepository)
         {
             _context = context;
             this.scheduleTrainingRepository = scheduleTrainingRepository;
+            this.trainingRepository = trainingRepository;
         }
+
         private string GetEmail()
         {
             return this.User.Identity.Name;
@@ -88,6 +92,10 @@ namespace wstkpasek.Controllers
         [HttpPost]
         public async Task<ActionResult<ScheduleTraining>> PostScheduleTraining(ScheduleTraining scheduleTraining)
         {
+            var email = GetEmail();
+            scheduleTraining.UserEmail = email;
+            var training = await trainingRepository.GetTraining(scheduleTraining.TrainingId, email);
+            scheduleTraining.Name = training.Name;
             _context.ScheduleTrainings.Add(scheduleTraining);
             await _context.SaveChangesAsync();
 
