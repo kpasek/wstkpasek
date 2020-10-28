@@ -118,8 +118,21 @@ export default class ExerciseDetail extends Component {
         "Content-Type": "application/json",
       },
     });
+    const seriesResponse = await fetch(
+      "api/series/exercise/" + this.state.exerciseId,
+      {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const series = await seriesResponse.json();
     this.setState({
-      series: this.state.series.filter((s) => s.seriesId !== seriesId),
+      series: series,
     });
   };
   handleNewSeries = async () => {
@@ -492,7 +505,7 @@ export default class ExerciseDetail extends Component {
     } else {
       return (
         <React.Fragment>
-          <span
+          <div
             key={"detail-exercise-" + this.state.exerciseId}
             className="ml-1"
           >
@@ -577,7 +590,7 @@ export default class ExerciseDetail extends Component {
                             this.handleDeleteSeries(s.seriesId);
                           }}
                         >
-                          Usuń
+                          Usuń serię
                         </button>
                       </div>
                       <div
@@ -764,31 +777,6 @@ export default class ExerciseDetail extends Component {
                             <i className="icon-minus"></i>
                           </button>
                         </div>
-                        {/* order input */}
-                        {/* <div className="row mx-auto mt-1">
-                          <label
-                            htmlFor={"series-order-" + s.seriesId}
-                            className="col-12 font-size-18"
-                          >
-                            Kolejność
-                          </label>
-                          <input
-                            className="form-control col-9 col-lg-6 text-center mx-1"
-                            id={"series-order-" + s.seriesId}
-                            type="number"
-                            min="1"
-                            defaultValue={s.order}
-                          />
-
-                          <button
-                            className="btn btn-outline-secondary col-2"
-                            onClick={() => {
-                              this.changeSeriesOrder(s.seriesId);
-                            }}
-                          >
-                            Zatwierdź
-                          </button>
-                        </div> */}
                       </div>
                     </div>
                   ))}
@@ -796,7 +784,7 @@ export default class ExerciseDetail extends Component {
                     className="ml-2 mt-2 cursor-pointer btn btn-outline-primary"
                     onClick={this.handleNewSeries}
                   >
-                    Dodaj
+                    Dodaj serię
                   </button>
                 </div>
               </div>
@@ -892,12 +880,12 @@ export default class ExerciseDetail extends Component {
                       );
                     }}
                   >
-                    Usuń
+                    Usuń ćwiczenie
                   </button>
                 </div>
               </div>
             </div>
-          </span>
+          </div>
         </React.Fragment>
       );
     }

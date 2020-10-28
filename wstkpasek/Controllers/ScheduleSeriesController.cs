@@ -56,7 +56,7 @@ namespace wstkpasek.Controllers
             var email = GetEmail();
             var scheduleSeries = await scheduleSeriesRepository.GetScheduleSeriesForScheduleExerciseAsync(exerciseId, email);
 
-            if (scheduleSeries == null) return NotFound();
+            if (scheduleSeries == null) return NoContent();
 
             return scheduleSeries;
         }
@@ -115,12 +115,23 @@ namespace wstkpasek.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<ScheduleSeries>> DeleteScheduleSeries(int id)
         {
+            var email = GetEmail();
+
             var scheduleSeries = await _context.ScheduleSeries.FindAsync(id);
             if (scheduleSeries == null)
             {
                 return NotFound();
             }
-
+            var seriesNewOrder = await scheduleSeriesRepository.GetScheduleSeriesForScheduleExerciseAsync(scheduleSeries.ScheduleExerciseId, email);
+            IEnumerable<ScheduleSeries> seriesToUpdate = seriesNewOrder.Where(w => w.Order > scheduleSeries.Order);
+            if (seriesToUpdate.Any())
+            {
+                foreach (var s in seriesToUpdate)
+                {
+                    s.Order--;
+                }
+                _context.UpdateRange(seriesToUpdate);
+            }
             _context.ScheduleSeries.Remove(scheduleSeries);
             await _context.SaveChangesAsync();
 
