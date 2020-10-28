@@ -5,7 +5,13 @@ export class SExercise extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { exercise: this.props.exercise, series: [], loading: false };
+    this.state = {
+      exercise: this.props.exercise,
+      series: [],
+      parts: [],
+      exercises: [],
+      loading: false,
+    };
   }
 
   async componentDidMount() {
@@ -24,9 +30,31 @@ export class SExercise extends Component {
         },
       }
     );
+    const exercisesResponse = await fetch("/api/exercises", {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const responseParts = await fetch("api/exercises/parts", {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const exercises = await exercisesResponse.json();
+    const parts = await responseParts.json();
     const series = await seriesRespone.json();
     this.setState({
       series: series,
+      exercises: exercises,
+      parts: parts,
       loading: false,
     });
   };
@@ -40,8 +68,21 @@ export class SExercise extends Component {
         "Content-Type": "application/json",
       },
     });
+    const seriesRespone = await fetch(
+      "api/schedule/series/e/" + this.state.exercise.scheduleExerciseId,
+      {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const s = await seriesRespone.json();
     this.setState({
-      series: this.state.series.filter((s) => s.scheduleSeriesId !== seriesId),
+      series: s,
     });
   };
   handleAdd = async (seriesId, fieldType) => {
@@ -157,7 +198,7 @@ export class SExercise extends Component {
     });
   };
   handleAddSeries = async () => {
-    const seriesResponse = await fetch("api/schedule/series", {
+    await fetch("api/schedule/series", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -169,10 +210,21 @@ export class SExercise extends Component {
         scheduleExerciseId: this.state.exercise.scheduleExerciseId,
       }),
     });
-    const series = await seriesResponse.json();
-    this.state.series.push(series);
+    const seriesRespone = await fetch(
+      "api/schedule/series/e/" + this.state.exercise.scheduleExerciseId,
+      {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const series = await seriesRespone.json();
     this.setState({
-      series: this.state.series,
+      series: series,
     });
   };
   handleChangeSeries = async (seriesId) => {
@@ -225,10 +277,86 @@ export class SExercise extends Component {
       series: series,
     });
   };
+  handleChangePart = async (scheduleExerciseId) => {
+    const part = document.getElementById(
+      "select-exercise-part-" + scheduleExerciseId
+    ).value;
+
+    if (part === "all") {
+      const exercisesResponse = await fetch("/api/exercises", {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      this.setState({
+        exercises: await exercisesResponse.json(),
+      });
+    } else {
+      const responseExercise = await fetch("api/exercises/part/" + part, {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      this.setState({
+        exercises: await responseExercise.json(),
+      });
+    }
+  };
+  renderExercises(scheduleExerciseId) {
+    if (this.state.exercises.length > 0) {
+      return (
+        <React.Fragment>
+          <select
+            id={"select-exercises-" + scheduleExerciseId}
+            className="custom-select"
+          >
+            {this.state.exercises.map((e) => (
+              <option key={e.exerciseId} value={e.exerciseId}>
+                {e.name}
+              </option>
+            ))}
+          </select>
+        </React.Fragment>
+      );
+    }
+  }
+  renderSelectPart = (scheduleExerciseId) => {
+    return (
+      <select
+        className="custom-select my-2"
+        id={"select-exercise-part-" + scheduleExerciseId}
+        onChange={() => this.handleChangePart(scheduleExerciseId)}
+      >
+        {this.renderPartsOptions()}
+      </select>
+    );
+  };
+  renderPartsOptions = () => {
+    return (
+      <React.Fragment>
+        <option key="select-default" value="all">
+          Wybierz partię
+        </option>
+        {this.state.parts.map((part) => (
+          <option key={"select-" + part.name} value={part.name}>
+            {part.name}
+          </option>
+        ))}
+      </React.Fragment>
+    );
+  };
   renderSeries() {
     if (this.state.loading) {
       return <div>trwa ładowanie</div>;
-    } else {
+    } else if (this.state.series.length > 0) {
       return (
         <React.Fragment>
           {this.state.series.map((s) => (
@@ -458,6 +586,12 @@ export class SExercise extends Component {
           ))}
         </React.Fragment>
       );
+    } else {
+      return (
+        <React.Fragment>
+          <div>Brak serii dla ćwiczenia</div>
+        </React.Fragment>
+      );
     }
   }
   renderBody() {
@@ -488,6 +622,18 @@ export class SExercise extends Component {
           </div>
           <div className="float-right py-2">
             <i
+              className="icon-loop font-size-large"
+              type="button"
+              data-toggle="collapse"
+              data-target={
+                "#swap-exercise-" + this.state.exercise.scheduleExerciseId
+              }
+              aria-expanded="false"
+              aria-controls={
+                "swap-exercise-" + this.state.exercise.scheduleExerciseId
+              }
+            />
+            <i
               className="icon-edit font-size-large"
               type="button"
               data-toggle="collapse"
@@ -516,6 +662,41 @@ export class SExercise extends Component {
             />
           </div>
           <div style={{ clear: "both" }}></div>
+        </span>
+        {/* collapsed swap fields */}
+        <span>
+          <div
+            className="collapse"
+            id={"swap-exercise-" + this.state.exercise.scheduleExerciseId}
+          >
+            {this.renderSelectPart(this.state.exercise.scheduleExerciseId)}
+            {this.renderExercises(this.state.exercise.scheduleExerciseId)}
+            <button
+              className="btn btn-outline-primary mt-2"
+              onClick={() => {
+                this.props.onSwap(this.state.exercise.scheduleExerciseId);
+              }}
+            >
+              Zamień ćwiczenia
+            </button>
+          </div>
+        </span>
+        {/* collapsed delete button */}
+        <span>
+          <div
+            className="collapse"
+            id={"delete-exercise-" + this.state.exercise.scheduleExerciseId}
+          >
+            <p>Usunięcie ćwiczenia z treningu jest nieodwracalne.</p>
+            <button
+              className="btn btn-outline-danger mt-2"
+              onClick={() => {
+                this.props.onDelete(this.state.exercise.scheduleExerciseId);
+              }}
+            >
+              Usuń ćwiczenie
+            </button>
+          </div>
         </span>
         {/* edit fields */}
         <span>
