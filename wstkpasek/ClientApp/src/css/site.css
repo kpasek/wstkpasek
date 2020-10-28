@@ -59,3 +59,13 @@ body{
 .max-width-400{
     max-width: 400;
 }
+
+.current-series{
+    font-size: 22px;
+    font-weight: 300;
+    margin-top: 8px;
+}
+
+.m-minus{
+    margin-top: -4px;
+}

@@ -1,4 +1,5 @@
 
+.icon-menu-1:before { content: '\2630'; } /* '☰' */
 .icon-left-open-big:before { content: '\e765'; } /* '' */
 .icon-right-open-big:before { content: '\e766'; } /* '' */
 .icon-down-dir:before { content: '\e800'; } /* '' */
