@@ -198,70 +198,72 @@ export class Exercises extends Component {
     } else {
       return (
         <React.Fragment>
-          <i
-            className="icon-plus font-size-20 float-left pl-3 pt-2"
-            type="button"
-            data-toggle="collapse"
-            data-target={"#new-exercise"}
-            aria-expanded="false"
-            aria-controls={"new-exercise"}
-          ></i>
-          <h1 className="mt-3 mb-4 text-center">Ćwiczenia</h1>
-          <div style={{ clear: "both" }}></div>
-          <div
-            id={"new-exercise"}
-            className="collapse"
-            aria-labelledby="newExercise"
-          >
-            <h3>Nowe ćwiczenie</h3>
-            <input
-              type="text"
-              className="form-control mt-1"
-              id="new-exercise-name"
-              placeholder="Nazwa ćwiczenia"
-              required
-            ></input>
-            <input
-              type="text"
-              className="form-control mt-1"
-              id="new-exercise-part"
-              list="part-list"
-              placeholder="Partia"
-              required
-            ></input>
-            <input
-              type="text"
-              className="form-control mt-1"
-              id="new-exercise-type"
-              placeholder="Typ ćwiczenia"
-              list="type-list"
-            ></input>
-            <input
-              type="text"
-              className="form-control mt-1"
-              id="new-exercise-description"
-              placeholder="Opis ćwiczenia"
-            ></input>
-            <button
-              className="btn btn-outline-primary mt-2"
-              onClick={this.handleNewExercise}
+          <div className="col-lg-8 mx-auto">
+            <i
+              className="icon-plus font-size-20 float-left pl-3 pt-2"
+              type="button"
+              data-toggle="collapse"
+              data-target={"#new-exercise"}
+              aria-expanded="false"
+              aria-controls={"new-exercise"}
+            ></i>
+            <h1 className="mt-3 mb-4 text-center">Ćwiczenia</h1>
+            <div style={{ clear: "both" }}></div>
+            <div
+              id={"new-exercise"}
+              className="collapse"
+              aria-labelledby="newExercise"
             >
-              Zatwierdź
-            </button>
+              <h3>Nowe ćwiczenie</h3>
+              <input
+                type="text"
+                className="form-control mt-1"
+                id="new-exercise-name"
+                placeholder="Nazwa ćwiczenia"
+                required
+              ></input>
+              <input
+                type="text"
+                className="form-control mt-1"
+                id="new-exercise-part"
+                list="part-list"
+                placeholder="Partia"
+                required
+              ></input>
+              <input
+                type="text"
+                className="form-control mt-1"
+                id="new-exercise-type"
+                placeholder="Typ ćwiczenia"
+                list="type-list"
+              ></input>
+              <input
+                type="text"
+                className="form-control mt-1"
+                id="new-exercise-description"
+                placeholder="Opis ćwiczenia"
+              ></input>
+              <button
+                className="btn btn-outline-primary mt-2"
+                onClick={this.handleNewExercise}
+              >
+                Zatwierdź
+              </button>
+            </div>
+            {this.renderSelectPart()}
+            {this.state.exercises.map((exercise) => (
+              <ExerciseDetail
+                key={"exercise-component-" + exercise.exerciseId + "-"}
+                training={false}
+                exercise={exercise}
+                types={this.state.types}
+                parts={this.state.parts}
+                onDeleteExercise={this.handleDeleteExercise}
+                refresh={this.fetchData}
+              />
+            ))}
+            {this.renderPartTypeList()}
           </div>
-          {this.renderSelectPart()}
-          {this.state.exercises.map((exercise) => (
-            <ExerciseDetail
-              key={"exercise-component-" + exercise.exerciseId + "-"}
-              training={false}
-              exercise={exercise}
-              types={this.state.types}
-              parts={this.state.parts}
-              onDeleteExercise={this.handleDeleteExercise}
-              refresh={this.fetchData}
-            />
-          ))}
-          {this.renderPartTypeList()}
         </React.Fragment>
       );
     }

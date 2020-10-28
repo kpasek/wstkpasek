@@ -135,62 +135,70 @@ export class Trainings extends Component {
     if (this.state.loading) return <h2>Trwa ładowanie...</h2>;
     return (
       <React.Fragment>
-        {/* new training button */}
-        <i
-          className="icon-plus font-size-20 float-left pl-3 pt-2"
-          type="button"
-          data-toggle="collapse"
-          data-target={"#new-training"}
-          aria-expanded="false"
-          aria-controls={"new-training"}
-        ></i>
-        <h1 className="mt-3 mb-4 text-center">Treningi</h1>
-        <div style={{ clear: "both" }}></div>
-        {/* new training fields */}
-        <div
-          id={"new-training"}
-          className="collapse"
-          aria-labelledby="newtraining"
-        >
-          <h3>Nowy trening</h3>
-          <label htmlFor="new-training-exercises" className="font-size-18 mt 2">
-            Nazwa treningu
-          </label>
-          <input
-            type="text"
-            className="form-control mt-1"
-            id="new-training-name"
-            required
-          ></input>
-          <label htmlFor="new-training-exercises" className="font-size-18 mt 2">
-            Ilość jednocześnie wykonywanych ćwiczeń
-          </label>
-          <input
-            type="number"
-            className="form-control mt-1"
-            id="new-training-exercises"
-            min="1"
-            defaultValue="2"
-          ></input>
-          <button
-            className="btn btn-outline-primary mt-2"
-            onClick={this.handleNewTraining}
+        <div className="col-lg-8 mx-auto">
+          {/* new training button */}
+          <i
+            className="icon-plus font-size-20 float-left pl-3 pt-2"
+            type="button"
+            data-toggle="collapse"
+            data-target={"#new-training"}
+            aria-expanded="false"
+            aria-controls={"new-training"}
+          ></i>
+          <h1 className="mt-3 mb-4 text-center">Treningi</h1>
+          <div style={{ clear: "both" }}></div>
+          {/* new training fields */}
+          <div
+            id={"new-training"}
+            className="collapse"
+            aria-labelledby="newtraining"
           >
-            Zatwierdź
-          </button>
-        </div>
-        <div className="mt-3 col-lg-8 p-0">
-          {this.state.trainings.map((training) => (
-            <Training
-              key={training.trainingId}
-              trainingId={training.trainingId}
-              onDeleteTraining={this.handleDeleteTraining}
-              types={this.state.types}
-              parts={this.state.parts}
-            />
-          ))}
-          {this.renderTypeIdList()}
-          {this.renderPartIdList()}
+            <h3>Nowy trening</h3>
+            <label
+              htmlFor="new-training-exercises"
+              className="font-size-18 mt 2"
+            >
+              Nazwa treningu
+            </label>
+            <input
+              type="text"
+              className="form-control mt-1"
+              id="new-training-name"
+              required
+            ></input>
+            <label
+              htmlFor="new-training-exercises"
+              className="font-size-18 mt 2"
+            >
+              Ilość jednocześnie wykonywanych ćwiczeń
+            </label>
+            <input
+              type="number"
+              className="form-control mt-1"
+              id="new-training-exercises"
+              min="1"
+              defaultValue="2"
+            ></input>
+            <button
+              className="btn btn-outline-primary mt-2"
+              onClick={this.handleNewTraining}
+            >
+              Zatwierdź
+            </button>
+          </div>
+          <div className="mt-3 p-0">
+            {this.state.trainings.map((training) => (
+              <Training
+                key={training.trainingId}
+                trainingId={training.trainingId}
+                onDeleteTraining={this.handleDeleteTraining}
+                types={this.state.types}
+                parts={this.state.parts}
+              />
+            ))}
+            {this.renderTypeIdList()}
+            {this.renderPartIdList()}
+          </div>
         </div>
       </React.Fragment>
     );
