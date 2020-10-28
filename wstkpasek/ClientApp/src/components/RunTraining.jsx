@@ -65,7 +65,6 @@ export class RunTraining extends Component {
       parts: parts,
       loading: false,
     });
-    console.log(this.state);
   }
   handleChangePart = async (scheduleExerciseId) => {
     const part = document.getElementById(
