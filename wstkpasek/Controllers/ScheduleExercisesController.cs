@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using wstkpasek.Models.Database;
 using wstkpasek.Models.In;
 using wstkpasek.Models.Schedule.Exercise;
+using wstkpasek.Models.Schedule.Series;
+using wstkpasek.Models.SeriesModel;
 
 namespace wstkpasek.Controllers
 {
@@ -17,12 +19,15 @@ namespace wstkpasek.Controllers
     {
         private readonly AppDBContext _context;
         private readonly IScheduleExerciseRepository scheduleExerciseRepository;
+        private readonly ISeriesRepository seriesRepository;
 
-        public ScheduleExercisesController(AppDBContext context, IScheduleExerciseRepository scheduleExerciseRepository)
+        public ScheduleExercisesController(AppDBContext context, IScheduleExerciseRepository scheduleExerciseRepository, ISeriesRepository seriesRepository)
         {
             _context = context;
             this.scheduleExerciseRepository = scheduleExerciseRepository;
+            this.seriesRepository = seriesRepository;
         }
+
         private string GetEmail()
         {
             return this.User.Identity.Name;
@@ -87,13 +92,61 @@ namespace wstkpasek.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<ScheduleExercise>> PostScheduleExercise(ScheduleExercise ScheduleExercise)
+        public async Task<ActionResult<ScheduleExercise>> PostScheduleExercise(AddSExerciseIn model)
         {
-            _context.ScheduleExercises.Add(ScheduleExercise);
+            var email = GetEmail();
+            var scheduleExercise = new ScheduleExercise();
+            scheduleExercise.UserEmail = email;
+            scheduleExercise.ExerciseId = model.exerciseId;
+            scheduleExercise.ScheduleTrainingId = model.scheduleTrainingId;
+            scheduleExercise.Order = await scheduleExerciseRepository.GetMaxOrderForScheduleExerciseAsync(model.scheduleTrainingId, email) + 1;
+
+            _context.ScheduleExercises.Add(scheduleExercise);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetScheduleExercise", new { id = ScheduleExercise.ScheduleExerciseId }, ScheduleExercise);
+            return CreatedAtAction("GetScheduleExercise", new { id = scheduleExercise.ScheduleExerciseId }, scheduleExercise);
         }
+
+        [HttpPost("swap")]
+        public async Task<ActionResult> SwapExercise(SwapSExerciseIn model)
+        {
+            var email = GetEmail();
+            var exerciseDelete = await scheduleExerciseRepository.GetScheduleExerciseAsync(model.ScheduleExerciseId, email);
+            var newExercise = new ScheduleExercise
+            {
+                ScheduleTrainingId = exerciseDelete.ScheduleTrainingId,
+                Started = false,
+                UserEmail = email,
+                Order = exerciseDelete.Order,
+                ExerciseId = model.ExerciseId
+            };
+
+            await _context.AddAsync(newExercise);
+            await _context.SaveChangesAsync();
+            var series = new List<ScheduleSeries>();
+            var seriesInExercise = await seriesRepository.GetSeriesForExerciseAsync(newExercise.ExerciseId, email);
+            foreach (var s in seriesInExercise)
+            {
+                series.Add(new ScheduleSeries
+                {
+                    ScheduleExerciseId = newExercise.ScheduleExerciseId,
+                    Distance = s.Distance,
+                    Finish = false,
+                    Load = s.Load,
+                    Name = s.Name,
+                    Order = s.Order,
+                    Repeats = s.Repeats,
+                    RestTime = s.RestTime,
+                    Time = s.Time,
+                    UserEmail = email,
+                });
+            }
+            await _context.AddRangeAsync(series);
+            _context.Remove(exerciseDelete);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
         [HttpPost("change-order")]
         public async Task<ActionResult> ChangeOrder(ChangeOrderSExerciseIn model)
         {
