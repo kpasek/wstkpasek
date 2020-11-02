@@ -67,14 +67,14 @@ namespace wstkpasek.Models.Schedule.Series
               .Where(exercise => exercise.ExerciseId == series.ScheduleExercise.ExerciseId
                     && exercise.ScheduleTraining.TrainingDate < series.ScheduleExercise.ScheduleTraining.TrainingDate)
               .OrderByDescending(o => o.ScheduleTraining.TrainingDate).Take(1);
-            if (!await scheduleExercises.AnyAsync()) return null;
+            if (!await scheduleExercises.AnyAsync()) return new List<ScheduleSeries>();
             var scheduleSeries = db.ScheduleSeries
               .Include(e => e.ScheduleExercise)
               .ThenInclude(tie => tie.Exercise)
               .Include(t => t.ScheduleExercise)
               .ThenInclude(ti => ti.ScheduleTraining)
               .Where(s => scheduleExercises.Contains(s.ScheduleExercise));
-            return !await scheduleSeries.AnyAsync() ? null : await scheduleSeries.ToListAsync();
+            return !await scheduleSeries.AnyAsync() ? new List<ScheduleSeries>() : await scheduleSeries.ToListAsync();
         }
 
         public async Task<List<ScheduleSeries>> GetScheduleSeriesByYearAsync(int year, string email)
