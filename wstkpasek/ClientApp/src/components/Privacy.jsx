@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-export class Account extends Component {
-  static displayName = Account.name;
+export class Privacy extends Component {
+  static displayName = Privacy.name;
 
   constructor(props) {
     super(props);
