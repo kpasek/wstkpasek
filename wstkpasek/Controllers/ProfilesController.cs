@@ -11,102 +11,63 @@ using wstkpasek.Models.User;
 
 namespace wstkpasek.Controllers
 {
-  [Route("api/profiles")]
-  [ApiController]
-  [Authorize]
-  public class ProfilesController : ControllerBase
-  {
-    private readonly AppDBContext _context;
-
-    public ProfilesController(AppDBContext context)
+    [Route("api/profiles")]
+    [ApiController]
+    [Authorize]
+    public class ProfilesController : ControllerBase
     {
-      _context = context;
-    }
+        private readonly AppDBContext _context;
 
-    // GET: api/Profiles
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<Profile>>> GetProfile()
-    {
-      return await _context.Profile.ToListAsync();
-    }
-
-    // GET: api/Profiles/5
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Profile>> GetProfile(int id)
-    {
-      var profile = await _context.Profile.FindAsync(id);
-
-      if (profile == null)
-      {
-        return NotFound();
-      }
-
-      return profile;
-    }
-
-    // PUT: api/Profiles/5
-    // To protect from overposting attacks, enable the specific properties you want to bind to, for
-    // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-    [HttpPut("{id}")]
-    public async Task<IActionResult> PutProfile(int id, Profile profile)
-    {
-      if (id != profile.ProfileId)
-      {
-        return BadRequest();
-      }
-
-      _context.Entry(profile).State = EntityState.Modified;
-
-      try
-      {
-        await _context.SaveChangesAsync();
-      }
-      catch (DbUpdateConcurrencyException)
-      {
-        if (!ProfileExists(id))
+        public ProfilesController(AppDBContext context)
         {
-          return NotFound();
+            _context = context;
         }
-        else
+        private string GetEmail()
         {
-          throw;
+            return this.User.Identity.Name;
         }
-      }
+        // GET: api/Profiles
+        [HttpGet]
+        public async Task<ActionResult<Profile>> GetProfile()
+        {
+            var email = GetEmail();
 
-      return NoContent();
+            return await _context.Profile.SingleAsync(s => s.Email == email);
+        }
+
+        // PUT: api/Profiles/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPut]
+        public async Task<IActionResult> PutProfile(Profile profile)
+        {
+            var email = GetEmail();
+            profile.Email = email;
+
+            _context.Entry(profile).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProfileExists(profile.ProfileId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        private bool ProfileExists(int id)
+        {
+            return _context.Profile.Any(e => e.ProfileId == id);
+        }
     }
-
-    // POST: api/Profiles
-    // To protect from overposting attacks, enable the specific properties you want to bind to, for
-    // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-    [HttpPost]
-    public async Task<ActionResult<Profile>> PostProfile(Profile profile)
-    {
-      _context.Profile.Add(profile);
-      await _context.SaveChangesAsync();
-
-      return CreatedAtAction("GetProfile", new { id = profile.ProfileId }, profile);
-    }
-
-    // DELETE: api/Profiles/5
-    [HttpDelete("{id}")]
-    public async Task<ActionResult<Profile>> DeleteProfile(int id)
-    {
-      var profile = await _context.Profile.FindAsync(id);
-      if (profile == null)
-      {
-        return NotFound();
-      }
-
-      _context.Profile.Remove(profile);
-      await _context.SaveChangesAsync();
-
-      return profile;
-    }
-
-    private bool ProfileExists(int id)
-    {
-      return _context.Profile.Any(e => e.ProfileId == id);
-    }
-  }
 }
