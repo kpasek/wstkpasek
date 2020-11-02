@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { SExercise } from "./SExercise";
+import { Link } from "react-router-dom";
 
 export class STrainings extends Component {
   static displayName = STrainings.name;
@@ -279,6 +280,12 @@ export class STrainings extends Component {
         <React.Fragment>
           <div className="col-lg-8 mx-auto">
             <div className="text-right mr-4">
+              <Link
+                to={"/start/" + this.state.scheduleTrainingId}
+                className="text-dark font-size-18"
+              >
+                Start <i className="icon-play-outline" />
+              </Link>
               <i
                 className="icon-edit font-size-large"
                 type="button"
