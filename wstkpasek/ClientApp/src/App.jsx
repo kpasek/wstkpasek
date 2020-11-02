@@ -11,6 +11,7 @@ import { RunTraining } from "./components/RunTraining";
 import { User } from "./components/User";
 import { Admin } from "./components/Admin";
 import { Account } from "./components/Account";
+import { Progress } from "./components/Progress";
 
 import "./css/site.css";
 
@@ -63,6 +64,7 @@ export default class App extends Component {
         <Route path="/trening" exact component={Trainings} />
         <Route path="/cwiczenia" component={Exercises} />
         <Route path="/seria" component={Series} />
+        <Route path="/postepy" component={Progress} />
         <Route path="/harmonogram" exact component={Schedule} />
         <Route path="/harmonogram/:trainingId" exact component={STrainings} />
         <Route path="/start/:trainingId" component={RunTraining} />

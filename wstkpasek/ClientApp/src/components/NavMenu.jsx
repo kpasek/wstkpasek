@@ -77,6 +77,11 @@ export class NavMenu extends Component {
               </li>
             } */}
             <li className="nav-item ml-auto">
+              <Link to="/postepy">
+                <span className="nav-link">Postępy</span>
+              </Link>
+            </li>
+            <li className="nav-item ml-auto">
               <Link to="/konto">
                 <span className="nav-link">Konto</span>
               </Link>
