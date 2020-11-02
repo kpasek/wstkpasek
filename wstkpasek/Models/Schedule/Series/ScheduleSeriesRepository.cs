@@ -1,16 +1,9 @@
-﻿using wstkpasek.Models.Exercises;
-using wstkpasek.Models.Database;
-using wstkpasek.Models.Schedule.Exercise;
-using wstkpasek.Models.Schedule.Series;
+﻿using wstkpasek.Models.Database;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Microsoft.EntityFrameworkCore.Internal;
-using System.ComponentModel.DataAnnotations;
 
 namespace wstkpasek.Models.Schedule.Series
 {
@@ -175,6 +168,17 @@ namespace wstkpasek.Models.Schedule.Series
                                           .ThenBy(tb => tb.ScheduleExercise.Exercise.Name)
                                           .Take(50);
             return await series.AnyAsync() ? await series.ToListAsync() : null;
+        }
+        public async Task<List<ScheduleSeries>> GetSeriesByDatesAsync(string email, DateTime? datefrom, DateTime? dateTo)
+        {
+            if (!dateTo.HasValue) dateTo = DateTime.Now;
+            if (!datefrom.HasValue) datefrom = DateTime.Now.AddMonths(-3);
+            var series = db.ScheduleSeries
+            .Include(ei => ei.ScheduleExercise)
+            .ThenInclude(ti => ti.ScheduleTraining)
+            .Where(s => s.ScheduleExercise.ScheduleTraining.TrainingDate >= datefrom && s.ScheduleExercise.ScheduleTraining.TrainingDate <= dateTo && s.UserEmail == email);
+
+            return await series.AnyAsync() ? await series.ToListAsync() : new List<ScheduleSeries>();
         }
     }
 }
