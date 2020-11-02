@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export class RunTraining extends Component {
   static displayName = RunTraining.name;
@@ -769,7 +770,13 @@ export class RunTraining extends Component {
 
     return (
       <React.Fragment>
-        <h2 className="text-center col-12 mt-2">{this.state.training.name}</h2>
+        <div className="col-12">
+          <Link to={"/harmonogram/" + this.state.scheduleTrainingId}>
+            <h2 className="text-center mt-2 text-dark">
+              {this.state.training.name}
+            </h2>
+          </Link>
+        </div>
         {this.renderCurrent()}
         {this.renderToComplete()}
         {this.renderFinishTraining()}
