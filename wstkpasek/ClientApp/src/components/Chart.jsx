@@ -15,6 +15,7 @@ export default class ProgressChart extends Component {
     const chart = document.getElementById("myChart");
     const maxOffset = Math.max(...this.state.data) * 1.1;
     const minOffset = Math.min(...this.state.data) * 0.9;
+    console.log(minOffset, maxOffset)
     let myChart = new Chart(chart, {
       type: "line",
       data: {
@@ -43,7 +44,7 @@ export default class ProgressChart extends Component {
               ticks: {
                 suggestedMin: minOffset,
                 suggestedMax: maxOffset,
-                beginAtZero: true,
+                beginAtZero: false,
               },
             },
           ],
