@@ -26,28 +26,30 @@ export class Progress extends Component {
     const series = await progressResponse.json();
     console.log(series);
     this.setState({
-      series: series,
+      progress: series,
+      loading: false,
     });
   };
   renderBody() {
     if (this.state.loading) {
       return <h2>Trwa ładowanie</h2>;
     } else {
+      const dataSet = {
+        dataType: this.state.progress[120].part,
+        labels: this.state.progress[120].dates,
+        data: this.state.progress[120].loads,
+      };
       return (
         <React.Fragment>
           <div className="col-lg-8">
-            <Chart labels={this.state.series} data={this.state.series} />
+            <canvas id="myChart" width="600" height="300"></canvas>
+            <Chart dataSet={dataSet} />
           </div>
         </React.Fragment>
       );
     }
   }
   render() {
-    return (
-      <div>
-        <h1>Strona w budowie</h1>
-        <p>blabal</p>
-      </div>
-    );
+    return this.renderBody();
   }
 }
