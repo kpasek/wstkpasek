@@ -21,5 +21,6 @@ namespace wstkpasek.Models.Schedule.Series
         Task<List<ScheduleSeries>> GetScheduleSeriesByYearMonthAsync(int year, int month, string email);
         Task<List<ScheduleSeries>> GetScheduleSeriesAdminAsync(string user, string name, string part, bool finish, DateTime startDate, DateTime endDate);
         Task<List<ScheduleSeries>> GetSeriesByDatesAsync(string email, DateTime? datefrom, DateTime? dateTo);
+        Task<List<ScheduleSeries>> GetSeriesByDatesAsync(string email, string part, DateTime? datefrom, DateTime? dateTo);
     }
 }

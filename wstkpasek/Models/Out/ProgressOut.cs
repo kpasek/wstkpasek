@@ -7,12 +7,12 @@ namespace wstkpasek.Models.Out
 {
     public class ProgressOut
     {
-        public string Part { get; set; }
-        public List<string> Dates { get; set; }
-        public List<double> Loads { get; set; }
-        public List<double> Repeats { get; set; }
-        public List<double> Distanses { get; set; }
-        public List<double> Times { get; set; }
-        public List<double> RestTimes { get; set; }
+        public string Type { get; set; }
+        public string Date { get; set; }
+        public double LoadAv { get; set; }
+        public double RepeatAv { get; set; }
+        public double DistanseAv { get; set; }
+        public double TimeAv { get; set; }
+        public double RestTimeAv { get; set; }
     }
 }

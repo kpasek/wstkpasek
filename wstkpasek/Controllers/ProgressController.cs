@@ -36,23 +36,55 @@ namespace wstkpasek.Controllers
             var email = GetEmail();
             var series = await seriesRepository.GetSeriesByDatesAsync(email, DateTime.Now.AddMonths(-1), null);
             List<ProgressOut> p = new List<ProgressOut>();
-            foreach (var s in series.OrderBy(o => o.Name).Select(s => s.ScheduleExercise.Exercise.Name).Distinct().ToList())
+
+            foreach (var date in series.Select(d => d.ScheduleExercise.ScheduleTraining.TrainingDate).Distinct())
             {
-                foreach (var d in series.Where(w => w.ScheduleExercise.Exercise.Name == s).Select(ser => new ProgressOut
+                foreach (var s in series.Where(w => w.ScheduleExercise.ScheduleTraining.TrainingDate == date).Select(s => s.ScheduleExercise).Distinct())
                 {
-                    Part = s,
-                    Dates = series.Where(w => w.ScheduleExercise.Exercise.Name == s).Select(d => d.ScheduleExercise.ScheduleTraining.TrainingDate.ToString("yyyy.MM.dd")).ToList(),
-                    Repeats = series.Where(w => w.ScheduleExercise.Exercise.Name == s).Select(r => (double)r.Repeats).ToList(),
-                    Loads = series.Where(w => w.ScheduleExercise.Exercise.Name == s).Select(l => l.Load).ToList(),
-                    Distanses = series.Where(w => w.ScheduleExercise.Exercise.Name == s).Select(dd => dd.Distance).ToList(),
-                    Times = series.Where(w => w.ScheduleExercise.Exercise.Name == s).Select(t => (double)t.Time).ToList(),
-                    RestTimes = series.Where(w => w.ScheduleExercise.Exercise.Name == s).Select(rt => (double)rt.RestTime).ToList()
-                }))
-                {
-                    p.Add(d);
+                    var pr = new ProgressOut
+                    {
+                        Date = date.ToString("MM-dd"),
+                        Type = series.Where(ser => ser.ScheduleExercise.ScheduleTraining.TrainingDate == date && ser.ScheduleExerciseId == s.ScheduleExerciseId).Take(1).Select(select => select.ScheduleExercise.Exercise.Name).Single(),
+                        LoadAv = Math.Round(series.Where(ser => ser.ScheduleExercise.ScheduleTraining.TrainingDate == date && ser.ScheduleExerciseId == s.ScheduleExerciseId).Select(select => select.Load).Average(), 2),
+                        RepeatAv = Math.Round(series.Where(ser => ser.ScheduleExercise.ScheduleTraining.TrainingDate == date && ser.ScheduleExerciseId == s.ScheduleExerciseId).Select(select => select.Repeats).Average(), 2),
+                        TimeAv = Math.Round(series.Where(ser => ser.ScheduleExercise.ScheduleTraining.TrainingDate == date && ser.ScheduleExerciseId == s.ScheduleExerciseId).Select(select => select.Time).Average(), 2),
+                        RestTimeAv = Math.Round(series.Where(ser => ser.ScheduleExercise.ScheduleTraining.TrainingDate == date && ser.ScheduleExerciseId == s.ScheduleExerciseId).Select(select => select.RestTime).Average(), 2),
+                        DistanseAv = Math.Round(series.Where(ser => ser.ScheduleExercise.ScheduleTraining.TrainingDate == date && ser.ScheduleExerciseId == s.ScheduleExerciseId).Select(select => select.Distance).Average(), 2),
+
+                    };
+                    p.Add(pr);
                 }
             }
             return p;
+
+        }
+        // GET: api/Types
+        [HttpGet("part/{part}")]
+        public async Task<ActionResult<List<ProgressOut>>> GetProgressByPart(string part)
+        {
+            var email = GetEmail();
+            var series = await seriesRepository.GetSeriesByDatesAsync(email, part, DateTime.Now.AddMonths(-2), null);
+            List<ProgressOut> p = new List<ProgressOut>();
+
+            foreach (var date in series.Select(d => d.ScheduleExercise.ScheduleTraining.TrainingDate).Distinct())
+            {
+
+                var pr = new ProgressOut
+                {
+                    Date = date.ToString("MM-dd"),
+                    Type = series.Where(ser => ser.ScheduleExercise.ScheduleTraining.TrainingDate == date).Select(select => select.ScheduleExercise.Exercise.PartId).Take(1).Single(),
+                    LoadAv = Math.Round(series.Where(ser => ser.ScheduleExercise.ScheduleTraining.TrainingDate == date).Select(select => select.Load).Average(), 2),
+                    RepeatAv = Math.Round(series.Where(ser => ser.ScheduleExercise.ScheduleTraining.TrainingDate == date).Select(select => select.Repeats).Average(), 2),
+                    TimeAv = Math.Round(series.Where(ser => ser.ScheduleExercise.ScheduleTraining.TrainingDate == date).Select(select => select.Time).Average(), 2),
+                    RestTimeAv = Math.Round(series.Where(ser => ser.ScheduleExercise.ScheduleTraining.TrainingDate == date).Select(select => select.RestTime).Average(), 2),
+                    DistanseAv = Math.Round(series.Where(ser => ser.ScheduleExercise.ScheduleTraining.TrainingDate == date).Select(select => select.Distance).Average(), 2),
+
+                };
+                p.Add(pr);
+
+            }
+            return p;
+
         }
 
         // GET: api/progress/2020-09-01/2020-10-01

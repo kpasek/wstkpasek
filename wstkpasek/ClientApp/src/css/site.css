@@ -1,71 +1,70 @@
-body{
-    min-width: 270px;
+body {
+  min-width: 270px;
 }
-.font-size-large{
-    font-size: 24px;
+.font-size-large {
+  font-size: 24px;
 }
-.font-size-20{
-    font-size: 20px;
+.font-size-20 {
+  font-size: 20px;
 }
-.font-size-18{
-    font-size: 18px;
+.font-size-18 {
+  font-size: 18px;
 }
-.font-weight-300{
-    font-weight: 300;
+.font-weight-300 {
+  font-weight: 300;
 }
-.letter-spacing-1{
-    letter-spacing: 1px;
+.letter-spacing-1 {
+  letter-spacing: 1px;
 }
-.link-black{
-    color: black;
+.link-black {
+  color: black;
 }
-.link-black:hover{
-    color: darkslategray;
+.link-black:hover {
+  color: darkslategray;
 }
-.link-green{
-    color: rgb(0, 125, 0);
+.link-green {
+  color: rgb(0, 125, 0);
 }
-.link-green:hover{
-    color: rgb(0, 75, 0);
+.link-green:hover {
+  color: rgb(0, 75, 0);
 }
-.cursor-pointer{
-    cursor: pointer;
+.cursor-pointer {
+  cursor: pointer;
 }
-.color-red{
-    color: red;
+.color-red {
+  color: red;
 }
 
-.training-subtitle{
-    font-size: 16px;
-    font-weight: 300;
-    padding-left: 4px;
+.training-subtitle {
+  font-size: 16px;
+  font-weight: 300;
+  padding-left: 4px;
 }
-.training-title{
-    font-size: 24px;
-    letter-spacing: 1px;
-
+.training-title {
+  font-size: 24px;
+  letter-spacing: 1px;
 }
 @media only screen and (max-width: 400px) {
-    .max-width-exercise-list{
-        max-width: 200px;
-    }
+  .max-width-exercise-list {
+    max-width: 200px;
+  }
 }
 
 @media only screen and (max-width: 313px) {
-    .max-width-exercise-list{
-        max-width: 160px;
-    }
+  .max-width-exercise-list {
+    max-width: 160px;
+  }
 }
-.max-width-400{
-    max-width: 400;
-}
-
-.current-series{
-    font-size: 22px;
-    font-weight: 300;
-    margin-top: 8px;
+.max-width-400 {
+  max-width: 400;
 }
 
-.m-minus{
-    margin-top: -4px;
+.current-series {
+  font-size: 22px;
+  font-weight: 300;
+  margin-top: 8px;
+}
+
+.m-minus {
+  margin-top: -4px;
 }

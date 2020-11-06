@@ -182,5 +182,19 @@ namespace wstkpasek.Models.Schedule.Series
 
             return await series.AnyAsync() ? await series.ToListAsync() : new List<ScheduleSeries>();
         }
+
+        public async Task<List<ScheduleSeries>> GetSeriesByDatesAsync(string email, string part, DateTime? datefrom, DateTime? dateTo)
+        {
+            if (!dateTo.HasValue) dateTo = DateTime.Now;
+            if (!datefrom.HasValue) datefrom = DateTime.Now.AddMonths(-3);
+            var series = db.ScheduleSeries
+            .Include(ei => ei.ScheduleExercise)
+            .ThenInclude(ti => ti.ScheduleTraining)
+            .Include(e => e.ScheduleExercise)
+            .ThenInclude(ex => ex.Exercise)
+            .Where(s => s.ScheduleExercise.ScheduleTraining.TrainingDate >= datefrom && s.ScheduleExercise.ScheduleTraining.TrainingDate <= dateTo && s.ScheduleExercise.Exercise.PartId == part && s.UserEmail == email);
+
+            return await series.AnyAsync() ? await series.ToListAsync() : new List<ScheduleSeries>();
+        }
     }
 }
