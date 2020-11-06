@@ -63,7 +63,7 @@ namespace wstkpasek.Controllers
         public async Task<ActionResult<List<ProgressOut>>> GetProgressByPart(string part)
         {
             var email = GetEmail();
-            var series = await seriesRepository.GetSeriesByDatesAsync(email, part, DateTime.Now.AddMonths(-2), null);
+            var series = await seriesRepository.GetSeriesByDatesAsync(email, part, DateTime.Now.AddMonths(-3), null);
             List<ProgressOut> p = new List<ProgressOut>();
 
             foreach (var date in series.Select(d => d.ScheduleExercise.ScheduleTraining.TrainingDate).Distinct())
@@ -78,7 +78,6 @@ namespace wstkpasek.Controllers
                     TimeAv = Math.Round(series.Where(ser => ser.ScheduleExercise.ScheduleTraining.TrainingDate == date).Select(select => select.Time).Average(), 2),
                     RestTimeAv = Math.Round(series.Where(ser => ser.ScheduleExercise.ScheduleTraining.TrainingDate == date).Select(select => select.RestTime).Average(), 2),
                     DistanseAv = Math.Round(series.Where(ser => ser.ScheduleExercise.ScheduleTraining.TrainingDate == date).Select(select => select.Distance).Average(), 2),
-
                 };
                 p.Add(pr);
 

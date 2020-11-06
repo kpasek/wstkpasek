@@ -8,10 +8,12 @@ export default class ProgressChart extends Component {
       data: this.props.dataSet,
       title: this.props.title,
       displayDates: this.props.displayDates,
-      chartId: this.props.chartId,
+      chartId:
+        this.props.chartId !== undefined ? this.props.chartId : "myChart",
       loading: true,
     };
   }
+  componentWillUnmount() {}
   componentDidMount() {
     const chart = document.getElementById(this.state.chartId);
     let maxOffset = 0;
@@ -30,6 +32,9 @@ export default class ProgressChart extends Component {
       options: {
         responsive: true, // Instruct chart js to respond nicely.
         maintainAspectRatio: false,
+        tooltips: {
+          enabled: true,
+        },
         legend: {
           display: true,
         },
@@ -61,24 +66,12 @@ export default class ProgressChart extends Component {
       },
     });
   }
-  renderChart() {
-    return <React.Fragment></React.Fragment>;
-  }
-  setChartProps() {
-    if (!this.state.loading) {
-      return <h4>Trwa ładowanie wykresu</h4>;
-    } else {
-    }
-  }
-  renderBody() {
+
+  render() {
     return (
       <React.Fragment>
-        {this.renderChart()}
-        {this.setChartProps()}
+        <canvas id={this.state.chartId} width="600" height="300"></canvas>
       </React.Fragment>
     );
-  }
-  render() {
-    return <React.Fragment>{this.renderBody()}</React.Fragment>;
   }
 }
