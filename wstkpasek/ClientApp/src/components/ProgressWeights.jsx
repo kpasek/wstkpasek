@@ -56,6 +56,7 @@ export default class ProgressWeights extends Component {
       ProgressWeights: weights,
       loadChart: true,
     });
+    document.getElementById(this.state.chartId).scrollIntoView();
   };
 
   prepareDates() {
