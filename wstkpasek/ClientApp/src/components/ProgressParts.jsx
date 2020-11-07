@@ -71,6 +71,8 @@ export default class ProgressParts extends Component {
       progressPart: progress,
       loadChart: true,
     });
+
+    document.getElementById("progressChartByPart").scrollIntoView();
   };
   prepareDates() {
     let dates = [];
