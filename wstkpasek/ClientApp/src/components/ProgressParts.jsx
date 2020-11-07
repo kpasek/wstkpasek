@@ -149,7 +149,7 @@ export default class ProgressParts extends Component {
           dataSet={chartData}
           title={
             this.state.progressPart[0] !== undefined
-              ? "Średnie wartości dla dni - " + this.state.progressPart[0].type
+              ? "Średnie wartości w dniach - " + this.state.progressPart[0].type
               : "Brak danych w wybranym okresie"
           }
           displayDates={display}

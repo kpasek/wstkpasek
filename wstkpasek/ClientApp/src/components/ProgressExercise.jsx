@@ -212,7 +212,7 @@ export default class ProgressExercise extends Component {
           dataSet={chartData}
           title={
             this.state.progressExercise[0] !== undefined
-              ? "Średnie wartości dla dni - " +
+              ? "Średnie wartości w dniach - " +
                 this.state.progressExercise[0].type
               : "Brak danych w wybranym okresie"
           }
