@@ -39,7 +39,7 @@ namespace wstkpasek.Controllers
             var email = GetEmail();
             dateFrom = dateFrom.Year == 1 ? DateTime.Now.AddMonths(-3) : dateFrom;
             dateTo = dateTo.Year == 1 ? DateTime.Now : dateTo;
-            return await _context.Weights.Where(w => w.UserEmail == email && w.Date >= dateFrom && w.Date <= dateTo).ToListAsync();
+            return await _context.Weights.Where(w => w.UserEmail == email && w.Date >= dateFrom && w.Date <= dateTo).OrderBy(o => o.Date).ToListAsync();
         }
 
         [HttpGet("{id}")]

@@ -193,7 +193,7 @@ namespace wstkpasek.Models.Schedule.Series
             .Include(e => e.ScheduleExercise)
             .ThenInclude(ex => ex.Exercise)
             .Where(s => s.ScheduleExercise.ScheduleTraining.TrainingDate >= datefrom && s.ScheduleExercise.ScheduleTraining.TrainingDate <= dateTo && s.ScheduleExercise.Exercise.PartId == part && s.Finish == true && s.UserEmail == email)
-            .OrderBy(o => o.ScheduleExercise.Exercise.Name);
+            .OrderBy(o => o.ScheduleExercise.ScheduleTraining.TrainingDate);
 
             return await series.AnyAsync() ? await series.ToListAsync() : new List<ScheduleSeries>();
         }
@@ -207,7 +207,7 @@ namespace wstkpasek.Models.Schedule.Series
             .Include(e => e.ScheduleExercise)
             .ThenInclude(ex => ex.Exercise)
             .Where(s => s.ScheduleExercise.ScheduleTraining.TrainingDate >= datefrom && s.ScheduleExercise.ScheduleTraining.TrainingDate <= dateTo && s.ScheduleExercise.Exercise.ExerciseId == exerciseId && s.Finish == true && s.UserEmail == email)
-            .OrderBy(o => o.ScheduleExercise.Exercise.Name);
+            .OrderBy(o => o.ScheduleExercise.ScheduleTraining.TrainingDate);
 
             return await series.AnyAsync() ? await series.ToListAsync() : new List<ScheduleSeries>();
         }

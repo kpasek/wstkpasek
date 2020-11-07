@@ -115,7 +115,7 @@ export default class ProgressWeights extends Component {
         labels: this.prepareDates(),
         datasets: this.prepareDataSet(),
       };
-      const display = chartData.labels.length < 15 ? true : false;
+      const display = chartData.labels.length < 25 ? true : false;
 
       return (
         <React.Fragment>
