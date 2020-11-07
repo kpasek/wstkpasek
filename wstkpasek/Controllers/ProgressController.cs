@@ -60,10 +60,12 @@ namespace wstkpasek.Controllers
         }
         // GET: api/Types
         [HttpGet("part/{part}")]
-        public async Task<ActionResult<List<ProgressOut>>> GetProgressByPart(string part)
+        public async Task<ActionResult<List<ProgressOut>>> GetProgressByPart(string part, DateTime dateFrom, DateTime dateTo)
         {
             var email = GetEmail();
-            var series = await seriesRepository.GetSeriesByDatesAsync(email, part, DateTime.Now.AddMonths(-3), null);
+            if (dateFrom.Year == 1) dateFrom = DateTime.Now.AddMonths(-3);
+            if (dateTo.Year == 1) dateTo = DateTime.Now;
+            var series = await seriesRepository.GetSeriesByDatesAsync(email, part, dateFrom, dateTo);
             List<ProgressOut> p = new List<ProgressOut>();
 
             foreach (var date in series.Select(d => d.ScheduleExercise.ScheduleTraining.TrainingDate).Distinct())

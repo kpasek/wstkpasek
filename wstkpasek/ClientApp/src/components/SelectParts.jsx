@@ -61,6 +61,7 @@ export default class SelectParts extends Component {
       this.state.selectId === undefined ? "select-parts" : this.state.selectId;
     return (
       <React.Fragment>
+        <label htmlFor={id}>Wybierz partię:</label>
         <select
           className="custom-select my-2"
           id={id}

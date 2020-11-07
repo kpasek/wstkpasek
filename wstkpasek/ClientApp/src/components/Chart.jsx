@@ -56,7 +56,7 @@ export default class ProgressChart extends Component {
           xAxes: [
             {
               ticks: {
-                display: true,
+                display: this.props.displayDates,
                 max: 5,
                 autoSkip: false,
               },
