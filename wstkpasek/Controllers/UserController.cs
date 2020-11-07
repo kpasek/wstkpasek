@@ -195,7 +195,7 @@ namespace wstkpasek.Controllers
             {
                 UserEmail = user.Email,
                 Date = DateTime.Now,
-                WeightIdKg = 0
+                WeightKg = 0
             };
             await profileTask;
             await db.Settings.AddAsync(settings);

@@ -258,11 +258,17 @@ export default class ProgressExercise extends Component {
       return (
         <React.Fragment>
           <div className="form-row mx-auto my-3">
+            <div className="col-12">
+              <h3>Statystyki dla ćwiczenia</h3>
+            </div>
             <SelectParts
               onChangePart={this.handleChangePart}
               default={false}
               selectId={this.state.selectId}
             />
+            <label htmlFor={this.state.selectExerciseId}>
+              Wybierz ćwiczenie
+            </label>
             {this.renderSelectExercise()}
             <div className="col">
               <label htmlFor={this.state.dateFromId}>Okres od: </label>

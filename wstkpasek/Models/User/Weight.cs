@@ -11,7 +11,7 @@ namespace wstkpasek.Models.User
         public int WeightId { get; set; }
         public string UserEmail { get; set; }
         [Required]
-        public double WeightIdKg { get; set; }
+        public double WeightKg { get; set; }
         public DateTime Date { get; set; } = DateTime.Now;
     }
 }

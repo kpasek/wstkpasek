@@ -175,6 +175,9 @@ export default class ProgressParts extends Component {
       return (
         <React.Fragment>
           <div className="form-row mx-auto my-3">
+            <div className="col-12">
+              <h3>Statystyki dla całej partii</h3>
+            </div>
             <SelectParts onChangePart={this.handleChangePart} default={false} />
             <div className="col">
               <label htmlFor="dateFrom">Okres od: </label>
