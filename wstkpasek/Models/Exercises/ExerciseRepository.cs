@@ -35,7 +35,8 @@ namespace wstkpasek.Models.Exercises
         {
             var e = db.Exercises
               .Include(p => p.Part)
-              .Where(c => c.UserEmail == email && c.Part.Name == partId);
+              .Where(c => c.UserEmail == email && c.Part.Name == partId)
+              .OrderBy(o => o.Name);
             return !e.Any() ? new List<Exercise>() : e.ToList();
         }
         public List<Exercise> GetExerciseByPart(Part part, string email)
@@ -139,15 +140,15 @@ namespace wstkpasek.Models.Exercises
                 .OrderBy(t => t.Order);
             if (!await trainingExercises.AnyAsync()) return new List<ExerciseWithOrder>();
             var exercisesWithOrder = trainingExercises.Select(exercise => new ExerciseWithOrder
-                {
-                    ExerciseId = exercise.ExerciseId,
-                    Name = exercise.Exercise.Name,
-                    Public = exercise.Exercise.Public,
-                    Description = exercise.Exercise.Description,
-                    Order = exercise.Order,
-                    PartId = exercise.Exercise.PartId,
-                    TypeId = exercise.Exercise.TypeId
-                })
+            {
+                ExerciseId = exercise.ExerciseId,
+                Name = exercise.Exercise.Name,
+                Public = exercise.Exercise.Public,
+                Description = exercise.Exercise.Description,
+                Order = exercise.Order,
+                PartId = exercise.Exercise.PartId,
+                TypeId = exercise.Exercise.TypeId
+            })
                 .ToList();
 
             return exercisesWithOrder;

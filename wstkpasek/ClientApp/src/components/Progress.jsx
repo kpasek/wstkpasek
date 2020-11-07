@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ProgressExercise from "./ProgressExercise";
 import ProgressParts from "./ProgressParts";
 
 export class Progress extends Component {
@@ -12,7 +13,10 @@ export class Progress extends Component {
   renderBody() {
     return (
       <React.Fragment>
-        <ProgressParts />
+        <div className="col-12">
+          <ProgressExercise />
+          <ProgressParts />
+        </div>
       </React.Fragment>
     );
   }

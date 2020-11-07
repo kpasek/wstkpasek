@@ -192,7 +192,22 @@ namespace wstkpasek.Models.Schedule.Series
             .ThenInclude(ti => ti.ScheduleTraining)
             .Include(e => e.ScheduleExercise)
             .ThenInclude(ex => ex.Exercise)
-            .Where(s => s.ScheduleExercise.ScheduleTraining.TrainingDate >= datefrom && s.ScheduleExercise.ScheduleTraining.TrainingDate <= dateTo && s.ScheduleExercise.Exercise.PartId == part && s.UserEmail == email);
+            .Where(s => s.ScheduleExercise.ScheduleTraining.TrainingDate >= datefrom && s.ScheduleExercise.ScheduleTraining.TrainingDate <= dateTo && s.ScheduleExercise.Exercise.PartId == part && s.Finish == true && s.UserEmail == email)
+            .OrderBy(o => o.ScheduleExercise.Exercise.Name);
+
+            return await series.AnyAsync() ? await series.ToListAsync() : new List<ScheduleSeries>();
+        }
+        public async Task<List<ScheduleSeries>> GetSeriesByDatesAsync(string email, int exerciseId, DateTime? datefrom, DateTime? dateTo)
+        {
+            if (!dateTo.HasValue) dateTo = DateTime.Now;
+            if (!datefrom.HasValue) datefrom = DateTime.Now.AddMonths(-3);
+            var series = db.ScheduleSeries
+            .Include(ei => ei.ScheduleExercise)
+            .ThenInclude(ti => ti.ScheduleTraining)
+            .Include(e => e.ScheduleExercise)
+            .ThenInclude(ex => ex.Exercise)
+            .Where(s => s.ScheduleExercise.ScheduleTraining.TrainingDate >= datefrom && s.ScheduleExercise.ScheduleTraining.TrainingDate <= dateTo && s.ScheduleExercise.Exercise.ExerciseId == exerciseId && s.Finish == true && s.UserEmail == email)
+            .OrderBy(o => o.ScheduleExercise.Exercise.Name);
 
             return await series.AnyAsync() ? await series.ToListAsync() : new List<ScheduleSeries>();
         }

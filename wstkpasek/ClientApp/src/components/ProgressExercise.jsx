@@ -2,10 +2,19 @@ import React, { Component } from "react";
 import Chart from "./Chart";
 import SelectParts from "./SelectParts";
 
-export default class ProgressParts extends Component {
+export default class ProgressExercise extends Component {
   constructor(props) {
     super(props);
-    this.state = { progressPart: [], loadChart: true, loading: true };
+    this.state = {
+      progressPart: [],
+      selectId: "select-part-exercise",
+      chartId: "progressChartByexercise",
+      dateFromId: "dateFromId",
+      dateToId: "dateToId",
+      selectExerciseId: "select-exercise",
+      loadChart: true,
+      loading: true,
+    };
   }
 
   async componentDidMount() {
@@ -22,36 +31,50 @@ export default class ProgressParts extends Component {
       },
     });
     const parts = await partResponse.json();
-    const progressResponse = await fetch("api/progress/part/" + parts[0].name, {
-      method: "GET",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const exercisesResponse = await fetch(
+      "api/exercises/part/" + parts[0].name,
+      {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const exercises = await exercisesResponse.json();
+    const progressResponse = await fetch(
+      "api/progress/exercise/" + exercises[0].exerciseId,
+      {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const series = await progressResponse.json();
     this.setState({
-      progressPart: series,
+      progressExercise: series,
       parts: parts,
+      exercises: exercises,
       loading: false,
     });
   };
-
-  handleChangePart = async () => {
-    const part = document.getElementById("select-parts").value;
+  handleChangeExercise = async () => {
     this.setState({
       loadChart: false,
     });
-
-    const dateFrom = document.getElementById("dateFrom").value;
-    const dateTo = document.getElementById("dateTo").value;
-
+    const exercise = document.getElementById(this.state.selectExerciseId).value;
+    const dateFrom = document.getElementById(this.state.dateFromId).value;
+    const dateTo = document.getElementById(this.state.dateToId).value;
     const progressResponse = await fetch(
-      "api/progress/part/" +
-        part +
+      "api/progress/exercise/" +
+        exercise +
         "?dateFrom=" +
         dateFrom +
         "&dateTo=" +
@@ -68,14 +91,56 @@ export default class ProgressParts extends Component {
     );
     const progress = await progressResponse.json();
     this.setState({
-      progressPart: progress,
+      progressExercise: progress,
+      loadChart: true,
+    });
+  };
+  handleChangePart = async () => {
+    const part = document.getElementById(this.state.selectId).value;
+    this.setState({
+      loadChart: false,
+    });
+
+    const dateFrom = document.getElementById(this.state.dateFromId).value;
+    const dateTo = document.getElementById(this.state.dateToId).value;
+    const exercisesResponse = await fetch("api/exercises/part/" + part, {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const exercises = await exercisesResponse.json();
+    const progressResponse = await fetch(
+      "api/progress/exercise/" +
+        exercises[0].exerciseId +
+        "?dateFrom=" +
+        dateFrom +
+        "&dateTo=" +
+        dateTo,
+      {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const progress = await progressResponse.json();
+    this.setState({
+      progressExercise: progress,
+      exercises: exercises,
       loadChart: true,
     });
   };
   prepareDates() {
     let dates = [];
-    for (let i = 0; i < this.state.progressPart.length; i++) {
-      dates.push(this.state.progressPart[i].date);
+    for (let i = 0; i < this.state.progressExercise.length; i++) {
+      dates.push(this.state.progressExercise[i].date);
     }
     return dates;
   }
@@ -85,12 +150,12 @@ export default class ProgressParts extends Component {
     let distances = [];
     let resttimes = [];
     let repeats = [];
-    for (let i = 0; i < this.state.progressPart.length; i++) {
-      loads.push(this.state.progressPart[i].loadAv);
-      times.push(this.state.progressPart[i].timeAv);
-      distances.push(this.state.progressPart[i].distanceAv);
-      repeats.push(this.state.progressPart[i].repeatAv);
-      resttimes.push(this.state.progressPart[i].restTimeAv);
+    for (let i = 0; i < this.state.progressExercise.length; i++) {
+      loads.push(this.state.progressExercise[i].loadAv);
+      times.push(this.state.progressExercise[i].timeAv);
+      distances.push(this.state.progressExercise[i].distanceAv);
+      repeats.push(this.state.progressExercise[i].repeatAv);
+      resttimes.push(this.state.progressExercise[i].restTimeAv);
     }
     let prepareDataSet = [];
     if (Math.max(...loads) > 0) {
@@ -146,12 +211,13 @@ export default class ProgressParts extends Component {
         <Chart
           dataSet={chartData}
           title={
-            this.state.progressPart[0] !== undefined
-              ? "Średnie wartości dla dni - " + this.state.progressPart[0].type
+            this.state.progressExercise[0] !== undefined
+              ? "Średnie wartości dla dni - " +
+                this.state.progressExercise[0].type
               : "Brak danych w wybranym okresie"
           }
           displayDates={display}
-          chartId={"progressChartByPart"}
+          chartId={this.state.chartId}
         />
       );
     } else {
@@ -161,6 +227,23 @@ export default class ProgressParts extends Component {
         </div>
       );
     }
+  }
+  renderSelectExercise() {
+    return (
+      <React.Fragment>
+        <select
+          className="custom-select"
+          id={this.state.selectExerciseId}
+          onChange={this.handleChangeExercise}
+        >
+          {this.state.exercises.map((exercise) => (
+            <option key={exercise.exerciseId} value={exercise.exerciseId}>
+              {exercise.name}
+            </option>
+          ))}
+        </select>
+      </React.Fragment>
+    );
   }
   renderBody() {
     if (this.state.loading) {
@@ -175,14 +258,19 @@ export default class ProgressParts extends Component {
       return (
         <React.Fragment>
           <div className="form-row mx-auto my-3">
-            <SelectParts onChangePart={this.handleChangePart} default={false} />
+            <SelectParts
+              onChangePart={this.handleChangePart}
+              default={false}
+              selectId={this.state.selectId}
+            />
+            {this.renderSelectExercise()}
             <div className="col">
-              <label htmlFor="dateFrom">Okres od: </label>
+              <label htmlFor={this.state.dateFromId}>Okres od: </label>
               <input
                 type="date"
                 className="form-control"
-                id="dateFrom"
-                onChange={this.handleChangePart}
+                id={this.state.dateFromId}
+                onChange={this.handleChangeExercise}
                 defaultValue={new Date(
                   new Date().setMonth(new Date().getMonth() - 3)
                 )
@@ -191,12 +279,12 @@ export default class ProgressParts extends Component {
               />
             </div>
             <div className="col">
-              <label htmlFor="dateTo"> do: </label>
+              <label htmlFor={this.state.dateToId}> do: </label>
               <input
                 type="date"
                 className="form-control"
-                id="dateTo"
-                onChange={this.handleChangePart}
+                id={this.state.dateToId}
+                onChange={this.handleChangeExercise}
                 defaultValue={new Date().toISOString().slice(0, 10)}
               />
             </div>

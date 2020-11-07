@@ -68,3 +68,6 @@ body {
 .m-minus {
   margin-top: -4px;
 }
+.chart-reload {
+  min-height: 300px;
+}
