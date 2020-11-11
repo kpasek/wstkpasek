@@ -235,44 +235,50 @@ export class Schedule extends Component {
     }
     return (
       <React.Fragment>
-        <div className="col-12 text-center">
-          <h1 className="mt-3 mb-1 text-center">Harmonogram</h1>
-          <div className="mb-3 font-size-20">
-            <i
-              className="icon-left-open-big"
-              onClick={() => {
-                this.handleChangeMonth(-1);
-              }}
-            />
-            <span className="mx-2">
-              {this.state.months[this.state.month] + " - " + this.state.year}
-            </span>
-            <i
-              className="icon-right-open-big"
-              onClick={() => {
-                this.handleChangeMonth(1);
-              }}
-            />
+        <div className="container">
+          <div className="row">
+            <div className="col-12 text-center">
+              <h1 className="mt-3 mb-1 text-center">Harmonogram</h1>
+              <div className="mb-3 font-size-20">
+                <i
+                  className="icon-left-open-big"
+                  onClick={() => {
+                    this.handleChangeMonth(-1);
+                  }}
+                />
+                <span className="mx-2">
+                  {this.state.months[this.state.month] +
+                    " - " +
+                    this.state.year}
+                </span>
+                <i
+                  className="icon-right-open-big"
+                  onClick={() => {
+                    this.handleChangeMonth(1);
+                  }}
+                />
+              </div>
+            </div>
+            <div className="col-lg-8 px-1">{this.renderTrainings()}</div>
+            <div className="col-lg-4 mt-3">
+              <h3 className="mt-3">Dodaj trening</h3>
+              <select id="select-training" className="custom-select my-1">
+                {this.renderTrainingOptions()}
+              </select>
+              <input
+                type="datetime-local"
+                id="add-training-date"
+                className="form-control"
+                defaultValue={new Date().toISOString().substr(0, 16)}
+              />
+              <button
+                className="btn btn-outline-success mt-2"
+                onClick={this.handleAddTraining}
+              >
+                Dodaj
+              </button>
+            </div>
           </div>
-        </div>
-        <div className="col-lg-8 px-1">{this.renderTrainings()}</div>
-        <div className="col-lg-4 mt-3">
-          <h3 className="mt-3">Dodaj trening</h3>
-          <select id="select-training" className="custom-select my-1">
-            {this.renderTrainingOptions()}
-          </select>
-          <input
-            type="datetime-local"
-            id="add-training-date"
-            className="form-control"
-            defaultValue={new Date().toISOString().substr(0, 16)}
-          />
-          <button
-            className="btn btn-outline-success mt-2"
-            onClick={this.handleAddTraining}
-          >
-            Dodaj
-          </button>
         </div>
       </React.Fragment>
     );
