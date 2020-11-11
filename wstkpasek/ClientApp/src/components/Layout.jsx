@@ -5,15 +5,17 @@ export class Layout extends Component {
   static displayName = Layout.name;
   render() {
     return (
-      <div>
-        <NavMenu
-          isAuthenticated={this.props.isAuthenticated}
-          handleLogout={this.props.handleLogout}
-        />
-        <div className="container">
-          <div className="row">{this.props.children}</div>
+      <React.Fragment>
+        <div>
+          <NavMenu
+            isAuthenticated={this.props.isAuthenticated}
+            handleLogout={this.props.handleLogout}
+          />
+          <div className="container">
+            <div className="row">{this.props.children}</div>
+          </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
