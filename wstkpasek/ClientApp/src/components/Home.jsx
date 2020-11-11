@@ -32,19 +32,73 @@ export class Home extends Component {
       }
     });
   };
+  renderLinks() {
+    if (this.props.isAuthenticated) {
+      return (
+        <React.Fragment>
+          <a
+            href="/harmonogram"
+            className="btn text-uppercase btn-outline-danger btn-lg mr-3 mb-3 wow bounceInUp"
+          >
+            HARMONOGRAM
+          </a>
+        </React.Fragment>
+      );
+    } else {
+      return (
+        <React.Fragment>
+          <a
+            href="/logowanie"
+            className="btn text-uppercase btn-outline-danger btn-lg mr-3 mb-3 wow bounceInUp"
+          >
+            {" "}
+            ZALOGUJ
+          </a>
+          <a
+            href="#"
+            onClick={this.handleTestUser}
+            className="btn text-uppercase btn-outline-danger btn-lg mb-3 wow bounceInDown"
+          >
+            DEMO
+          </a>
+        </React.Fragment>
+      );
+    }
+  }
+  renderHello() {
+    if (this.props.isAuthenticated) {
+      return (
+        <h2>
+          {" "}
+          WITAJ PONOWNIE <br />
+          <span>ZACZYNAJMY</span>{" "}
+        </h2>
+      );
+    } else {
+      return (
+        <h2>
+          {" "}
+          DOŁĄCZ DO NAS <br />
+          <span>ZACZYNAJMY</span>{" "}
+        </h2>
+      );
+    }
+  }
   render() {
     if (this.state.redirect) {
       return <Redirect to={this.state.redirect} />;
     } else {
       return (
-        <div>
-          <h1>Strona w budowie</h1>
-          <button
-            className="btn btn-outline-success mt-2"
-            onClick={this.handleTestUser}
-          >
-            Zaloguj się na użytkownika testowego
-          </button>
+        <div id="top-background">
+          <div className="container">
+            <div className="fh5co-banner-text-box">
+              <div className="quote-box pl-5 pr-5 wow bounceInRight">
+                {this.renderHello()}
+              </div>
+              {this.renderLinks()}
+              <div className="clearfix"></div>
+            </div>
+          </div>
         </div>
       );
     }

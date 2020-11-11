@@ -1,7 +1,9 @@
 body {
   min-width: 270px;
   font-family: "Quicksand", sans-serif;
+  background-color: black;
 }
+
 .font-size-large {
   font-size: 24px;
 }
@@ -71,4 +73,14 @@ body {
 }
 .chart-reload {
   min-height: 300px;
+}
+header {
+  background-color: rgba(0, 0, 0, 1);
+}
+#top-background{
+  background-image: url("../images/ban2-1500x500.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: black;
+  min-height: 450px;
 }

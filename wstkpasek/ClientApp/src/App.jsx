@@ -14,6 +14,10 @@ import { Account } from "./components/Account";
 import { Progress } from "./components/Progress";
 
 import "./css/site.css";
+import "./css/animate.css";
+import "./css/animation.css";
+import "./css/style.css";
+import "./css/bootstrap.min.css";
 
 export default class App extends Component {
   static displayName = App.name;
@@ -59,7 +63,13 @@ export default class App extends Component {
         <Route
           exact
           path="/"
-          render={(props) => <Home handleLogin={this.handleLogin} {...props} />}
+          render={(props) => (
+            <Home
+              handleLogin={this.handleLogin}
+              isAuthenticated={this.state.isAuthenticated}
+              {...props}
+            />
+          )}
         />
         <Route path="/trening" exact component={Trainings} />
         <Route path="/cwiczenia" component={Exercises} />

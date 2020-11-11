@@ -2,6 +2,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./NavMenu.css";
+import "../css/style.css";
+import logo from "../images/logo.png";
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
@@ -24,14 +26,12 @@ export class NavMenu extends Component {
     if (!this.props.isAuthenticated) {
       return (
         <React.Fragment>
-          <ul className="navbar-nav">
+          <ul className="navbar-nav ml-auto">
             <li className="nav-item">
               <Link to="/prywatnosc">
                 <span className="nav-link">Prywatność</span>
               </Link>
             </li>
-          </ul>
-          <ul className="navbar-nav ml-auto">
             <li className="nav-item">
               <Link to="/logowanie">
                 <span className="nav-link">Zaloguj/Zarejestruj</span>
@@ -43,7 +43,7 @@ export class NavMenu extends Component {
     } else {
       return (
         <React.Fragment>
-          <ul className="navbar-nav">
+          <ul className="navbar-nav ml-auto">
             <li className="nav-item">
               <Link to="/harmonogram">
                 <span className="nav-link" href="/harmonogram">
@@ -61,8 +61,6 @@ export class NavMenu extends Component {
                 <span className="nav-link">Lista ćwiczeń</span>
               </Link>
             </li>
-          </ul>
-          <ul className="navbar-nav ml-auto">
             {/* @if(User.IsInRole("Admin"))
             {
               <li className="nav-item ml-auto">
@@ -87,12 +85,9 @@ export class NavMenu extends Component {
               </Link>
             </li>
             <li className="nav-item ml-auto ml-lg-1">
-              <span
-                onClick={this.props.handleLogout}
-                className="nav-link cursor-pointer"
-              >
-                Wyloguj
-              </span>
+              <Link onClick={this.props.handleLogout}>
+                <span className="nav-link cursor-pointer">WYLOGUJ</span>
+              </Link>
             </li>
           </ul>
         </React.Fragment>
@@ -103,7 +98,36 @@ export class NavMenu extends Component {
   render() {
     return (
       <header>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav className="navbar navbar-expand-md navbar-dark">
+          <div className="container">
+            <a className="navbar-brand mr-auto" href="/">
+              <img src={logo} alt="Workout Planner" height="15" />
+            </a>
+
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#collapsibleNavbar"
+            >
+              {" "}
+              <span className="navbar-toggler-icon"></span>{" "}
+            </button>
+
+            <div className="collapse navbar-collapse" id="collapsibleNavbar">
+              {this.renderNavbar()}
+              {/* <ul className="navbar-nav ml-5">
+                <li className="nav-item">
+                  {" "}
+                  <a className="nav-link btn btn-danger" href="#">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  </a>{" "}
+                </li>
+              </ul> */}
+            </div>
+          </div>
+        </nav>
+        {/* <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
           <Link to="/">
             <span className="navbar-brand">Strona główna</span>
           </Link>
@@ -121,7 +145,7 @@ export class NavMenu extends Component {
           <div className="collapse navbar-collapse" id="navbarNav">
             {this.renderNavbar()}
           </div>
-        </nav>
+        </nav> */}
       </header>
     );
   }
