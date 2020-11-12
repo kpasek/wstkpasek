@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route } from "react-router";
+
 import { Layout } from "./components/Layout";
 import { Home } from "./components/Home";
 import { Trainings } from "./components/Trainings/Trainings";
@@ -14,10 +15,6 @@ import { Account } from "./components/Account";
 import { Progress } from "./components/Progress";
 
 import "./css/site.css";
-import "./css/animate.css";
-import "./css/animation.css";
-import "./css/style.css";
-import "./css/bootstrap.min.css";
 
 export default class App extends Component {
   static displayName = App.name;

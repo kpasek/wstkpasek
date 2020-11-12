@@ -2,7 +2,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./NavMenu.css";
-import "../css/style.css";
 import logo from "../images/logo.png";
 
 export class NavMenu extends Component {
@@ -46,19 +45,19 @@ export class NavMenu extends Component {
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
               <Link to="/harmonogram">
-                <span className="nav-link" href="/harmonogram">
+                <span className="nav-link text-uppercase" href="/harmonogram">
                   Harmonogram
                 </span>
               </Link>
             </li>
             <li className="nav-item">
               <Link to="/trening">
-                <span className="nav-link">Treningi</span>
+                <span className="nav-link text-uppercase">Treningi</span>
               </Link>
             </li>
             <li className="nav-item">
               <Link to="/cwiczenia">
-                <span className="nav-link">Lista ćwiczeń</span>
+                <span className="nav-link text-uppercase">Lista ćwiczeń</span>
               </Link>
             </li>
             {/* @if(User.IsInRole("Admin"))
@@ -76,17 +75,19 @@ export class NavMenu extends Component {
             } */}
             <li className="nav-item ml-auto">
               <Link to="/postepy">
-                <span className="nav-link">Postępy</span>
+                <span className="nav-link text-uppercase">Postępy</span>
               </Link>
             </li>
             <li className="nav-item ml-auto">
               <Link to="/konto">
-                <span className="nav-link">Konto</span>
+                <span className="nav-link text-uppercase">Konto</span>
               </Link>
             </li>
             <li className="nav-item ml-auto ml-lg-1">
-              <Link onClick={this.props.handleLogout}>
-                <span className="nav-link cursor-pointer">WYLOGUJ</span>
+              <Link to="#" onClick={this.props.handleLogout}>
+                <span className="nav-link cursor-pointer text-uppercase">
+                  WYLOGUJ
+                </span>
               </Link>
             </li>
           </ul>
@@ -98,7 +99,7 @@ export class NavMenu extends Component {
   render() {
     return (
       <header>
-        <nav className="navbar navbar-expand-md navbar-dark">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-black">
           <div className="container">
             <a className="navbar-brand mr-auto" href="/">
               <img src={logo} alt="Workout Planner" height="15" />
