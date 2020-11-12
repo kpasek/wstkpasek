@@ -20,6 +20,9 @@ export class NavMenu extends Component {
       collapsed: !this.state.collapsed,
     });
   }
+  hideNavbar() {
+    document.getElementById("navbar-toggler-button").click();
+  }
   componentDidUpdate() {}
   renderNavbar() {
     if (!this.props.isAuthenticated) {
@@ -28,12 +31,16 @@ export class NavMenu extends Component {
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
               <Link to="/prywatnosc">
-                <span className="nav-link">Prywatność</span>
+                <span className="nav-link" onClick={this.hideNavbar}>
+                  Prywatność
+                </span>
               </Link>
             </li>
             <li className="nav-item">
               <Link to="/logowanie">
-                <span className="nav-link">Zaloguj/Zarejestruj</span>
+                <span className="nav-link" onClick={this.hideNavbar}>
+                  Zaloguj/Zarejestruj
+                </span>
               </Link>
             </li>
           </ul>
@@ -44,19 +51,19 @@ export class NavMenu extends Component {
         <React.Fragment>
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <Link to="/harmonogram">
+              <Link to="/harmonogram" onClick={this.hideNavbar}>
                 <span className="nav-link text-uppercase" href="/harmonogram">
                   Harmonogram
                 </span>
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/trening">
+              <Link to="/trening" onClick={this.hideNavbar}>
                 <span className="nav-link text-uppercase">Treningi</span>
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/cwiczenia">
+              <Link to="/cwiczenia" onClick={this.hideNavbar}>
                 <span className="nav-link text-uppercase">Lista ćwiczeń</span>
               </Link>
             </li>
@@ -74,12 +81,12 @@ export class NavMenu extends Component {
               </li>
             } */}
             <li className="nav-item ml-auto">
-              <Link to="/postepy">
+              <Link to="/postepy" onClick={this.hideNavbar}>
                 <span className="nav-link text-uppercase">Postępy</span>
               </Link>
             </li>
             <li className="nav-item ml-auto">
-              <Link to="/konto">
+              <Link to="/konto" onClick={this.hideNavbar}>
                 <span className="nav-link text-uppercase">Konto</span>
               </Link>
             </li>
@@ -107,6 +114,7 @@ export class NavMenu extends Component {
 
             <button
               className="navbar-toggler"
+              id="navbar-toggler-button"
               type="button"
               data-toggle="collapse"
               data-target="#collapsibleNavbar"
