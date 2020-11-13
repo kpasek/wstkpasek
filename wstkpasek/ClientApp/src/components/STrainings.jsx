@@ -279,13 +279,15 @@ export class STrainings extends Component {
       return (
         <React.Fragment>
           <div className="col-lg-8 mx-auto">
-            <div className="text-right mr-4">
+            <div className="float-left mt-2 ml-2">
               <Link
                 to={"/start/" + this.state.scheduleTrainingId}
-                className="text-dark font-size-18"
+                className="text-dark font-size-20"
               >
                 Start <i className="icon-play-outline" />
               </Link>
+            </div>
+            <div className="text-right mr-4">
               <i
                 className="icon-edit font-size-large"
                 type="button"

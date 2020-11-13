@@ -55,7 +55,7 @@ export class Layout extends Component {
                           src={facebook}
                           alt="facebook"
                           className="social-icon p-2"
-                          width="50"
+                          width="45"
                         />
                       </a>
                       <a href="https://github.com/kpasek">
@@ -63,7 +63,7 @@ export class Layout extends Component {
                           src={github}
                           alt="github"
                           className="social-icon p-2 ml-1"
-                          width="50"
+                          width="45"
                         />
                       </a>
                     </div>

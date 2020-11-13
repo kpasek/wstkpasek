@@ -109,7 +109,7 @@ export class NavMenu extends Component {
         <nav className="navbar navbar-expand-lg navbar-dark bg-black">
           <div className="container">
             <a className="navbar-brand mr-auto" href="/">
-              <img src={logo} alt="Workout Planner" height="15" />
+              <img src={logo} alt="Workout Planner" height="auto" width="250" />
             </a>
 
             <button
@@ -125,36 +125,9 @@ export class NavMenu extends Component {
 
             <div className="collapse navbar-collapse" id="collapsibleNavbar">
               {this.renderNavbar()}
-              {/* <ul className="navbar-nav ml-5">
-                <li className="nav-item">
-                  {" "}
-                  <a className="nav-link btn btn-danger" href="#">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  </a>{" "}
-                </li>
-              </ul> */}
             </div>
           </div>
         </nav>
-        {/* <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-          <Link to="/">
-            <span className="navbar-brand">Strona główna</span>
-          </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            {this.renderNavbar()}
-          </div>
-        </nav> */}
       </header>
     );
   }
