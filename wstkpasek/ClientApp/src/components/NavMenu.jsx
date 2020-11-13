@@ -109,7 +109,7 @@ export class NavMenu extends Component {
         <nav className="navbar navbar-expand-lg navbar-dark bg-black">
           <div className="container">
             <a className="navbar-brand mr-auto" href="/">
-              <img src={logo} alt="Workout Planner" height="auto" width="250" />
+              <img src={logo} alt="Workout Planner" height="auto" width="190" />
             </a>
 
             <button

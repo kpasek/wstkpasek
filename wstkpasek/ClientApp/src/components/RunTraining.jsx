@@ -770,17 +770,21 @@ export class RunTraining extends Component {
 
     return (
       <React.Fragment>
-        <div className="col-12">
-          <Link to={"/harmonogram/" + this.state.scheduleTrainingId}>
-            <h2 className="text-center mt-2 text-dark">
-              {this.state.training.name}
-            </h2>
-          </Link>
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <Link to={"/harmonogram/" + this.state.scheduleTrainingId}>
+                <h2 className="text-center mt-2 text-dark">
+                  {this.state.training.name}
+                </h2>
+              </Link>
+            </div>
+            {this.renderCurrent()}
+            {this.renderToComplete()}
+            {this.renderFinishTraining()}
+            {this.renderFinished()}
+          </div>
         </div>
-        {this.renderCurrent()}
-        {this.renderToComplete()}
-        {this.renderFinishTraining()}
-        {this.renderFinished()}
       </React.Fragment>
     );
   }

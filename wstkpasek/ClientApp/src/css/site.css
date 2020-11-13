@@ -7,7 +7,9 @@ body {
   min-height: 100vh;
 }
 
-
+nav{
+  border-bottom: 8px solid #FF772F;
+}
 .font-size-large {
   font-size: 24px;
 }
